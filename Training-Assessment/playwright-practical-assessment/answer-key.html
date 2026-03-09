@@ -1,0 +1,1365 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0">
+  <title>Answer Key — Playwright Interview (Trainer Only)</title>
+  <style>
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    :root{
+      --primary:#1a6b3c;--primary-dk:#115229;--accent:#2ea043;
+      --bg:#f0f4f1;--surface:#fff;--border:#d1ddd5;--text:#1a2b22;--muted:#556b5e;
+      --mono:'Consolas','Fira Code','Courier New',monospace;
+      --sans:'Segoe UI','Inter',Arial,sans-serif;
+    }
+    body{font-family:var(--sans);background:var(--bg);color:var(--text);font-size:14px;line-height:1.65;padding-bottom:60px}
+    .ak-header{background:linear-gradient(135deg,var(--primary-dk) 0%,var(--primary) 100%);color:#fff;padding:28px 0 22px;margin-bottom:28px}
+    .page-wrap{max-width:960px;margin:0 auto;padding:0 20px}
+    .ak-header h1{font-size:24px;font-weight:800;margin-bottom:6px}
+    .ak-header p{font-size:13px;opacity:.85}
+    .trainer-badge{display:inline-block;background:rgba(255,255,255,.2);border:1px solid rgba(255,255,255,.35);border-radius:20px;padding:3px 14px;font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;margin-bottom:10px}
+    .section-heading{font-size:17px;font-weight:800;color:var(--primary);margin:32px 0 16px;padding-bottom:8px;border-bottom:2px solid var(--border)}
+    .ak-card{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:20px 24px;margin-bottom:18px;box-shadow:0 2px 8px rgba(26,107,60,.08)}
+    .ak-card-header{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:14px}
+    .ak-q-num{background:var(--primary);color:#fff;font-size:12px;font-weight:800;padding:3px 12px;border-radius:20px}
+    .ak-topic{background:#d1fae5;color:#065f46;font-size:11.5px;font-weight:700;padding:3px 12px;border-radius:20px}
+    .ak-type{font-size:11px;font-weight:700;padding:3px 10px;border-radius:12px;text-transform:uppercase;letter-spacing:.04em}
+    .ak-type.write{background:#fce7f3;color:#be185d}
+    .ak-type.mcq{background:#e0e7ff;color:#3730a3}
+    .ak-correct-badge{background:#dcfce7;color:#14532d;font-size:13px;font-weight:900;padding:4px 14px;border-radius:20px;border:1.5px solid #16a34a;margin-left:auto}
+    .ak-lang-block{margin-bottom:12px}
+    .ak-lang-label{font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:.06em;padding:3px 10px;border-radius:4px 4px 0 0;display:inline-block}
+    .lang-js{background:#fef9c3;color:#92400e}
+    .lang-ts{background:#dbeafe;color:#1e40af}
+    .lang-py{background:#e0f2fe;color:#075985}
+    .ak-code{font-family:var(--mono);font-size:12.5px;background:#1e2d26;color:#a7f3d0;padding:14px 18px;border-radius:0 6px 6px 6px;white-space:pre;overflow-x:auto;line-height:1.6}
+    .ak-explanation{font-size:13.5px;color:var(--text);background:#f0fdf4;border-left:4px solid var(--accent);padding:12px 16px;border-radius:0 6px 6px 0}
+    .summary-table{width:100%;border-collapse:collapse;margin-bottom:28px;font-size:13px}
+    .summary-table th{background:var(--primary);color:#fff;padding:9px 12px;text-align:left;font-weight:700}
+    .summary-table td{padding:8px 12px;border-bottom:1px solid var(--border);vertical-align:top}
+    .summary-table tr:nth-child(even) td{background:var(--bg)}
+    .summary-table code{font-family:var(--mono);font-size:12px;background:#eef5f0;color:#1a4731;padding:1px 5px;border-radius:3px}
+    .pwd-note{background:#fef9c3;border:1px solid #fde68a;border-radius:8px;padding:14px 18px;font-size:13px;color:#78350f;margin-bottom:24px;font-weight:600}
+  </style>
+</head>
+<body>
+  <!-- PASSWORD LOCK — xpath@training -->
+  <div id="lockScreen" style="position:fixed;inset:0;z-index:9999;background:linear-gradient(135deg,#115229 0%,#1a6b3c 100%);display:flex;align-items:center;justify-content:center;font-family:'Segoe UI',Arial,sans-serif;">
+    <div style="background:#fff;border-radius:14px;padding:44px 40px 36px;width:360px;max-width:92vw;box-shadow:0 20px 60px rgba(0,0,0,.45);text-align:center;">
+      <div style="font-size:48px;margin-bottom:12px;">🔒</div>
+      <h2 style="color:#115229;font-size:20px;margin-bottom:6px;">Trainer Access Only</h2>
+      <p style="color:#556b5e;font-size:13px;margin-bottom:24px;">This Playwright answer key is password protected.<br>Enter the trainer password to continue.</p>
+      <input id="pwInput" type="password" placeholder="Enter password"
+        style="width:100%;padding:11px 14px;border:1.5px solid #d1ddd5;border-radius:7px;font-size:14px;outline:none;color:#1a2b22;margin-bottom:10px;box-sizing:border-box;transition:border-color .2s;"
+        onkeydown="if(event.key==='Enter') checkPwd()"
+        onfocus="this.style.borderColor='#1a6b3c'"
+        onblur="this.style.borderColor='#d1ddd5'" />
+      <div id="pwError" style="color:#dc2626;font-size:12px;margin-bottom:10px;min-height:16px;font-weight:600;"></div>
+      <button onclick="checkPwd()" style="width:100%;padding:11px;background:#1a6b3c;color:#fff;border:none;border-radius:7px;font-size:14px;font-weight:700;cursor:pointer;transition:background .2s;"
+        onmouseover="this.style.background='#115229'" onmouseout="this.style.background='#1a6b3c'">
+        Unlock Answer Key
+      </button>
+      <p style="margin-top:18px;font-size:11px;color:#9ca3af;">Unauthorised access is prohibited.</p>
+    </div>
+  </div>
+  <div id="mainContent" style="display:none;">
+
+<div class="ak-header">
+  <div class="page-wrap">
+    <div class="trainer-badge">🔐 Trainer Only</div>
+    <h1>Playwright Interview — Answer Key</h1>
+    <p>50 advanced practical questions · JavaScript / TypeScript / Python · Do NOT share with candidates</p>
+  </div>
+</div>
+<div class="page-wrap">
+  <div class="pwd-note">🔒 This file is password protected. Password: <code style="background:#fff;padding:2px 8px;border-radius:4px;border:1px solid #fde68a">xpath@training</code></div>
+
+  <h2 class="section-heading">Quick Reference — MCQ Answers</h2>
+  <table class="summary-table">
+    <thead><tr><th>Q#</th><th>Topic</th><th>Correct</th><th>Key Point</th></tr></thead>
+    <tbody>
+<tr><td><strong>Q36</strong></td><td>Playwright auto-waits before click(). The assertio...</td><td style="font-weight:900;color:#16a34a">B</td><td>Playwright auto-waits before click(). The assertion on #result can still time out if the action completes later than the default 5s timeout — increase timeout or use waitForLoadState.</td></tr>
+<tr><td><strong>Q37</strong></td><td>Official Playwright order: getByRole (mirrors acce...</td><td style="font-weight:900;color:#16a34a">B</td><td>Official Playwright order: getByRole (mirrors accessibility) → getByTestId (explicit test hooks) → getByText/getByLabel → CSS/XPath as last resort.</td></tr>
+<tr><td><strong>Q38</strong></td><td>Browser contexts are fully isolated environments. ...</td><td style="font-weight:900;color:#16a34a">B</td><td>Browser contexts are fully isolated environments. They share the browser process but have separate cookies, storage, sessions — like different incognito windows.</td></tr>
+<tr><td><strong>Q39</strong></td><td>page.route() is the interception API — it can fulf...</td><td style="font-weight:900;color:#16a34a">C</td><td>page.route() is the interception API — it can fulfill, abort, or continue requests. page.on('request') is observation-only and cannot block or modify the request.</td></tr>
+<tr><td><strong>Q40</strong></td><td>fullyParallel:true breaks the file-level barrier —...</td><td style="font-weight:900;color:#16a34a">C</td><td>fullyParallel:true breaks the file-level barrier — individual tests within a file can run in parallel across workers, not just different files.</td></tr>
+<tr><td><strong>Q41</strong></td><td>Soft assertions collect failures, continue executi...</td><td style="font-weight:900;color:#16a34a">C</td><td>Soft assertions collect failures, continue execution, then throw them all together at assertAll(). The test only fails after assertAll() is called.</td></tr>
+<tr><td><strong>Q42</strong></td><td>scope:'worker' means the fixture is created once p...</td><td style="font-weight:900;color:#16a34a">C</td><td>scope:'worker' means the fixture is created once per worker process and shared by all tests running in that worker, reducing expensive setup cost.</td></tr>
+<tr><td><strong>Q43</strong></td><td>networkidle waits until there are no network conne...</td><td style="font-weight:900;color:#16a34a">C</td><td>networkidle waits until there are no network connections for 500ms. Ideal for SPAs that fire async fetch/XHR requests after the initial DOM load.</td></tr>
+<tr><td><strong>Q44</strong></td><td>test.step() creates labeled groups in the HTML rep...</td><td style="font-weight:900;color:#16a34a">B</td><td>test.step() creates labeled groups in the HTML report and Trace Viewer. It has no effect on retries or browser context — it is purely for reporting.</td></tr>
+<tr><td><strong>Q45</strong></td><td>Test-level configuration overrides global config. ...</td><td style="font-weight:900;color:#16a34a">B</td><td>Test-level configuration overrides global config. retries:0 at test level means zero retries for that specific test regardless of the global setting.</td></tr>
+<tr><td><strong>Q46</strong></td><td>getByRole('button', {name:'Close dialog'}) matches...</td><td style="font-weight:900;color:#16a34a">B</td><td>getByRole('button', {name:'Close dialog'}) matches by ARIA role + accessible name (aria-label). This is the most resilient and semantically correct approach.</td></tr>
+<tr><td><strong>Q47</strong></td><td>on-first-retry records a trace only when a test fa...</td><td style="font-weight:900;color:#16a34a">C</td><td>on-first-retry records a trace only when a test fails the first time and enters its first retry cycle. No retry = no trace file.</td></tr>
+<tr><td><strong>Q48</strong></td><td>globalSetup runs once before the entire suite in a...</td><td style="font-weight:900;color:#16a34a">B</td><td>globalSetup runs once before the entire suite in a separate Node.js process. It cannot use page/browser fixtures; use it for DB seeding, token generation, etc.</td></tr>
+<tr><td><strong>Q49</strong></td><td>Playwright enforces strict mode — locators must ma...</td><td style="font-weight:900;color:#16a34a">B</td><td>Playwright enforces strict mode — locators must match exactly one element during action calls. Multiple matches throw a StrictModeViolation error.</td></tr>
+<tr><td><strong>Q50</strong></td><td>expect(fn).toPass() retries the entire async funct...</td><td style="font-weight:900;color:#16a34a">B</td><td>expect(fn).toPass() retries the entire async function block (including the fetch call) until all inner assertions pass or timeout. Unlike expect.poll() it can wrap multi-step logic.</td></tr>
+    </tbody>
+  </table>
+
+  <h2 class="section-heading">Write Questions — Model Answers (Q1–Q35)</h2>
+
+<div class="ak-card">
+  <div class="ak-card-header">
+    <span class="ak-q-num">Q1</span>
+    <span class="ak-topic">Navigation &amp; Assertions</span>
+    <span class="ak-type write">Write Code</span>
+  </div>
+  <div class="ak-lang-block">
+  <div class="ak-lang-label lang-js">JavaScript</div>
+  <pre class="ak-code">await page.goto('https://example.com/dashboard');
+await expect(page).toHaveTitle('Dashboard | MyApp');
+await expect(page.locator('h1')).toContainText('Welcome to Dashboard');</pre>
+</div>
+  <div class="ak-lang-block">
+  <div class="ak-lang-label lang-ts">TypeScript</div>
+  <pre class="ak-code">await page.goto('https://example.com/dashboard');
+await expect(page).toHaveTitle('Dashboard | MyApp');
+await expect(page.locator('h1')).toContainText('Welcome to Dashboard');</pre>
+</div>
+  <div class="ak-lang-block">
+  <div class="ak-lang-label lang-py">Python</div>
+  <pre class="ak-code">page.goto('https://example.com/dashboard')
+expect(page).to_have_title('Dashboard | MyApp')
+expect(page.locator('h1')).to_contain_text('Welcome to Dashboard')</pre>
+</div>
+</div>
+<div class="ak-card">
+  <div class="ak-card-header">
+    <span class="ak-q-num">Q2</span>
+    <span class="ak-topic">Form Fill &amp; Submit</span>
+    <span class="ak-type write">Write Code</span>
+  </div>
+  <div class="ak-lang-block">
+  <div class="ak-lang-label lang-js">JavaScript</div>
+  <pre class="ak-code">await page.getByPlaceholder('Username').fill('admin');
+await page.getByPlaceholder('Password').fill('Secret123');
+await page.getByTestId('login-btn').click();
+await expect(page).toHaveURL(/\/home/);</pre>
+</div>
+  <div class="ak-lang-block">
+  <div class="ak-lang-label lang-ts">TypeScript</div>
+  <pre class="ak-code">await page.getByPlaceholder('Username').fill('admin');
+await page.getByPlaceholder('Password').fill('Secret123');
+await page.getByTestId('login-btn').click();
+await expect(page).toHaveURL(/\/home/);</pre>
+</div>
+  <div class="ak-lang-block">
+  <div class="ak-lang-label lang-py">Python</div>
+  <pre class="ak-code">page.get_by_placeholder('Username').fill('admin')
+page.get_by_placeholder('Password').fill('Secret123')
+page.get_by_test_id('login-btn').click()
+expect(page).to_have_url(re.compile(r'/home'))</pre>
+</div>
+</div>
+<div class="ak-card">
+  <div class="ak-card-header">
+    <span class="ak-q-num">Q3</span>
+    <span class="ak-topic">Network Interception</span>
+    <span class="ak-type write">Write Code</span>
+  </div>
+  <div class="ak-lang-block">
+  <div class="ak-lang-label lang-js">JavaScript</div>
+  <pre class="ak-code">await page.route('**/api/users', async route =&gt; {
+  await route.fulfill({
+    status: 200,
+    contentType: 'application/json',
+    body: JSON.stringify([{ id: 1, name: 'Alice' }]),
+  });
+});
+await page.goto('/');
+await expect(page.locator('#user-list')).toBeVisible();</pre>
+</div>
+  <div class="ak-lang-block">
+  <div class="ak-lang-label lang-ts">TypeScript</div>
+  <pre class="ak-code">await page.route('**/api/users', async route =&gt; {
+  await route.fulfill({
+    status: 200,
+    contentType: 'application/json',
+    body: JSON.stringify([{ id: 1, name: 'Alice' }]),
+  });
+});
+await page.goto('/');
+await expect(page.locator('#user-list')).toBeVisible();</pre>
+</div>
+  <div class="ak-lang-block">
+  <div class="ak-lang-label lang-py">Python</div>
+  <pre class="ak-code">def handle(route):
+    route.fulfill(status=200,
+                  content_type='application/json',
+                  body=json.dumps([{'id':1,'name':'Alice'}]))
+page.route('**/api/users', handle)
+page.goto('/')
+expect(page.locator('#user-list')).to_be_visible()</pre>
+</div>
+</div>
+<div class="ak-card">
+  <div class="ak-card-header">
+    <span class="ak-q-num">Q4</span>
+    <span class="ak-topic">Dialog Handling</span>
+    <span class="ak-type write">Write Code</span>
+  </div>
+  <div class="ak-lang-block">
+  <div class="ak-lang-label lang-js">JavaScript</div>
+  <pre class="ak-code">let dialogMessage = '';
+page.on('dialog', async dialog =&gt; {
+  dialogMessage = dialog.message();
+  await dialog.accept();
+});
+await page.click('button:text(&quot;Delete Account&quot;)');
+expect(dialogMessage).toBe('Confirm deletion?');</pre>
+</div>
+  <div class="ak-lang-block">
+  <div class="ak-lang-label lang-ts">TypeScript</div>
+  <pre class="ak-code">let dialogMessage = '';
+page.on('dialog', async (dialog) =&gt; {
+  dialogMessage = dialog.message();
+  await dialog.accept();
+});
+await page.click('button:text(&quot;Delete Account&quot;)');
+expect(dialogMessage).toBe('Confirm deletion?');</pre>
+</div>
+  <div class="ak-lang-block">
+  <div class="ak-lang-label lang-py">Python</div>
+  <pre class="ak-code">messages = []
+def handle_dialog(dialog):
+    messages.append(dialog.message())
+    dialog.accept()
+page.on('dialog', handle_dialog)
+page.click('button:text(&quot;Delete Account&quot;)')
+assert messages[0] == 'Confirm deletion?'</pre>
+</div>
+</div>
+<div class="ak-card">
+  <div class="ak-card-header">
+    <span class="ak-q-num">Q5</span>
+    <span class="ak-topic">iFrame Handling</span>
+    <span class="ak-type write">Write Code</span>
+  </div>
+  <div class="ak-lang-block">
+  <div class="ak-lang-label lang-js">JavaScript</div>
+  <pre class="ak-code">const frame = page.frameLocator('[name=&quot;payment-frame&quot;]');
+await frame.locator('#card-number').fill('4111111111111111');
+await frame.locator('#pay-btn').click();</pre>
+</div>
+  <div class="ak-lang-block">
+  <div class="ak-lang-label lang-ts">TypeScript</div>
+  <pre class="ak-code">const frame = page.frameLocator('[name=&quot;payment-frame&quot;]');
+await frame.locator('#card-number').fill('4111111111111111');
+await frame.locator('#pay-btn').click();</pre>
+</div>
+  <div class="ak-lang-block">
+  <div class="ak-lang-label lang-py">Python</div>
+  <pre class="ak-code">frame = page.frame_locator('[name=&quot;payment-frame&quot;]')
+frame.locator('#card-number').fill('4111111111111111')
+frame.locator('#pay-btn').click()</pre>
+</div>
+</div>
+<div class="ak-card">
+  <div class="ak-card-header">
+    <span class="ak-q-num">Q6</span>
+    <span class="ak-topic">Multi-Tab Handling</span>
+    <span class="ak-type write">Write Code</span>
+  </div>
+  <div class="ak-lang-block">
+  <div class="ak-lang-label lang-js">JavaScript</div>
+  <pre class="ak-code">const [newPage] = await Promise.all([
+  context.waitForEvent('page'),
+  page.click('#docs-link'),
+]);
+await newPage.waitForLoadState();
+await expect(newPage).toHaveURL(/docs\.example\.com/);
+await newPage.close();</pre>
+</div>
+  <div class="ak-lang-block">
+  <div class="ak-lang-label lang-ts">TypeScript</div>
+  <pre class="ak-code">const [newPage] = await Promise.all([
+  context.waitForEvent('page'),
+  page.click('#docs-link'),
+]);
+await newPage.waitForLoadState();
+await expect(newPage).toHaveURL(/docs\.example\.com/);
+await newPage.close();</pre>
+</div>
+  <div class="ak-lang-block">
+  <div class="ak-lang-label lang-py">Python</div>
+  <pre class="ak-code">with context.expect_event('page') as page_info:
+    page.click('#docs-link')
+new_page = page_info.value
+new_page.wait_for_load_state()
+assert 'docs.example.com' in new_page.url
+new_page.close()</pre>
+</div>
+</div>
+<div class="ak-card">
+  <div class="ak-card-header">
+    <span class="ak-q-num">Q7</span>
+    <span class="ak-topic">File Upload</span>
+    <span class="ak-type write">Write Code</span>
+  </div>
+  <div class="ak-lang-block">
+  <div class="ak-lang-label lang-js">JavaScript</div>
+  <pre class="ak-code">await page.locator('#avatar-upload').setInputFiles('./fixtures/avatar.png');
+await page.click('#upload-btn');
+await expect(page.locator('#upload-status')).toHaveText('Upload successful');</pre>
+</div>
+  <div class="ak-lang-block">
+  <div class="ak-lang-label lang-ts">TypeScript</div>
+  <pre class="ak-code">await page.locator('#avatar-upload').setInputFiles('./fixtures/avatar.png');
+await page.click('#upload-btn');
+await expect(page.locator('#upload-status')).toHaveText('Upload successful');</pre>
+</div>
+  <div class="ak-lang-block">
+  <div class="ak-lang-label lang-py">Python</div>
+  <pre class="ak-code">page.locator('#avatar-upload').set_input_files('./fixtures/avatar.png')
+page.click('#upload-btn')
+expect(page.locator('#upload-status')).to_have_text('Upload successful')</pre>
+</div>
+</div>
+<div class="ak-card">
+  <div class="ak-card-header">
+    <span class="ak-q-num">Q8</span>
+    <span class="ak-topic">Drag &amp; Drop</span>
+    <span class="ak-type write">Write Code</span>
+  </div>
+  <div class="ak-lang-block">
+  <div class="ak-lang-label lang-js">JavaScript</div>
+  <pre class="ak-code">await page.locator('#drag-item').dragTo(page.locator('#drop-zone'));
+await expect(page.locator('#drop-zone')).toContainText('Drag Me');</pre>
+</div>
+  <div class="ak-lang-block">
+  <div class="ak-lang-label lang-ts">TypeScript</div>
+  <pre class="ak-code">await page.locator('#drag-item').dragTo(page.locator('#drop-zone'));
+await expect(page.locator('#drop-zone')).toContainText('Drag Me');</pre>
+</div>
+  <div class="ak-lang-block">
+  <div class="ak-lang-label lang-py">Python</div>
+  <pre class="ak-code">page.locator('#drag-item').drag_to(page.locator('#drop-zone'))
+expect(page.locator('#drop-zone')).to_contain_text('Drag Me')</pre>
+</div>
+</div>
+<div class="ak-card">
+  <div class="ak-card-header">
+    <span class="ak-q-num">Q9</span>
+    <span class="ak-topic">Keyboard Actions</span>
+    <span class="ak-type write">Write Code</span>
+  </div>
+  <div class="ak-lang-block">
+  <div class="ak-lang-label lang-js">JavaScript</div>
+  <pre class="ak-code">await page.locator('#editor').click();
+await page.locator('#editor').press('Control+A');
+await page.locator('#editor').press('Control+C');
+await page.keyboard.press('Escape');
+await expect(page.locator('#editor')).toBeFocused();</pre>
+</div>
+  <div class="ak-lang-block">
+  <div class="ak-lang-label lang-ts">TypeScript</div>
+  <pre class="ak-code">await page.locator('#editor').click();
+await page.locator('#editor').press('Control+A');
+await page.locator('#editor').press('Control+C');
+await page.keyboard.press('Escape');
+await expect(page.locator('#editor')).toBeFocused();</pre>
+</div>
+  <div class="ak-lang-block">
+  <div class="ak-lang-label lang-py">Python</div>
+  <pre class="ak-code">page.locator('#editor').click()
+page.locator('#editor').press('Control+A')
+page.locator('#editor').press('Control+C')
+page.keyboard.press('Escape')
+expect(page.locator('#editor')).to_be_focused()</pre>
+</div>
+</div>
+<div class="ak-card">
+  <div class="ak-card-header">
+    <span class="ak-q-num">Q10</span>
+    <span class="ak-topic">Hover &amp; Tooltip</span>
+    <span class="ak-type write">Write Code</span>
+  </div>
+  <div class="ak-lang-block">
+  <div class="ak-lang-label lang-js">JavaScript</div>
+  <pre class="ak-code">await page.locator('#info-btn').hover();
+await expect(page.getByRole('tooltip')).toBeVisible();
+await expect(page.getByRole('tooltip')).toContainText('Click for help');</pre>
+</div>
+  <div class="ak-lang-block">
+  <div class="ak-lang-label lang-ts">TypeScript</div>
+  <pre class="ak-code">await page.locator('#info-btn').hover();
+await expect(page.getByRole('tooltip')).toBeVisible();
+await expect(page.getByRole('tooltip')).toContainText('Click for help');</pre>
+</div>
+  <div class="ak-lang-block">
+  <div class="ak-lang-label lang-py">Python</div>
+  <pre class="ak-code">page.locator('#info-btn').hover()
+expect(page.get_by_role('tooltip')).to_be_visible()
+expect(page.get_by_role('tooltip')).to_contain_text('Click for help')</pre>
+</div>
+</div>
+<div class="ak-card">
+  <div class="ak-card-header">
+    <span class="ak-q-num">Q11</span>
+    <span class="ak-topic">Select / Dropdown</span>
+    <span class="ak-type write">Write Code</span>
+  </div>
+  <div class="ak-lang-block">
+  <div class="ak-lang-label lang-js">JavaScript</div>
+  <pre class="ak-code">await page.locator('#country').selectOption({ value: 'au' });
+await expect(page.locator('#country')).toHaveValue('au');</pre>
+</div>
+  <div class="ak-lang-block">
+  <div class="ak-lang-label lang-ts">TypeScript</div>
+  <pre class="ak-code">await page.locator('#country').selectOption({ value: 'au' });
+await expect(page.locator('#country')).toHaveValue('au');</pre>
+</div>
+  <div class="ak-lang-block">
+  <div class="ak-lang-label lang-py">Python</div>
+  <pre class="ak-code">page.locator('#country').select_option(value='au')
+expect(page.locator('#country')).to_have_value('au')</pre>
+</div>
+</div>
+<div class="ak-card">
+  <div class="ak-card-header">
+    <span class="ak-q-num">Q12</span>
+    <span class="ak-topic">Assertions — Count</span>
+    <span class="ak-type write">Write Code</span>
+  </div>
+  <div class="ak-lang-block">
+  <div class="ak-lang-label lang-js">JavaScript</div>
+  <pre class="ak-code">await expect(page.locator('.product-item')).toHaveCount(5);</pre>
+</div>
+  <div class="ak-lang-block">
+  <div class="ak-lang-label lang-ts">TypeScript</div>
+  <pre class="ak-code">await expect(page.locator('.product-item')).toHaveCount(5);</pre>
+</div>
+  <div class="ak-lang-block">
+  <div class="ak-lang-label lang-py">Python</div>
+  <pre class="ak-code">expect(page.locator('.product-item')).to_have_count(5)</pre>
+</div>
+</div>
+<div class="ak-card">
+  <div class="ak-card-header">
+    <span class="ak-q-num">Q13</span>
+    <span class="ak-topic">Table Data Extraction</span>
+    <span class="ak-type write">Write Code</span>
+  </div>
+  <div class="ak-lang-block">
+  <div class="ak-lang-label lang-js">JavaScript</div>
+  <pre class="ak-code">const names = await page.locator('#data-table tbody td:first-child').allTextContents();
+expect(names).toEqual(['Alice', 'Bob']);</pre>
+</div>
+  <div class="ak-lang-block">
+  <div class="ak-lang-label lang-ts">TypeScript</div>
+  <pre class="ak-code">const names = await page.locator('#data-table tbody td:first-child').allTextContents();
+expect(names).toEqual(['Alice', 'Bob']);</pre>
+</div>
+  <div class="ak-lang-block">
+  <div class="ak-lang-label lang-py">Python</div>
+  <pre class="ak-code">names = page.locator('#data-table tbody td:first-child').all_text_contents()
+assert names == ['Alice', 'Bob']</pre>
+</div>
+</div>
+<div class="ak-card">
+  <div class="ak-card-header">
+    <span class="ak-q-num">Q14</span>
+    <span class="ak-topic">waitForResponse</span>
+    <span class="ak-type write">Write Code</span>
+  </div>
+  <div class="ak-lang-block">
+  <div class="ak-lang-label lang-js">JavaScript</div>
+  <pre class="ak-code">const [response] = await Promise.all([
+  page.waitForResponse(resp =&gt; resp.url().includes('/api/users') &amp;&amp; resp.status() === 200),
+  page.click('#load-data'),
+]);
+const body = await response.json();
+expect(body).toHaveProperty('data');</pre>
+</div>
+  <div class="ak-lang-block">
+  <div class="ak-lang-label lang-ts">TypeScript</div>
+  <pre class="ak-code">const [response] = await Promise.all([
+  page.waitForResponse(resp =&gt; resp.url().includes('/api/users') &amp;&amp; resp.status() === 200),
+  page.click('#load-data'),
+]);
+const body = await response.json();
+expect(body).toHaveProperty('data');</pre>
+</div>
+  <div class="ak-lang-block">
+  <div class="ak-lang-label lang-py">Python</div>
+  <pre class="ak-code">with page.expect_response(lambda r: '/api/users' in r.url and r.status == 200) as resp_info:
+    page.click('#load-data')
+response = resp_info.value
+body = response.json()
+assert 'data' in body</pre>
+</div>
+</div>
+<div class="ak-card">
+  <div class="ak-card-header">
+    <span class="ak-q-num">Q15</span>
+    <span class="ak-topic">Soft Assertions</span>
+    <span class="ak-type write">Write Code</span>
+  </div>
+  <div class="ak-lang-block">
+  <div class="ak-lang-label lang-js">JavaScript</div>
+  <pre class="ak-code">const softly = expect.configure({ soft: true });
+await softly(page.locator('#display-name')).toHaveText('Jane Doe');
+await softly(page.locator('#user-email')).toHaveText('jane@example.com');
+await softly(page.locator('#user-role')).toHaveText('Admin');
+await softly.assertAll();</pre>
+</div>
+  <div class="ak-lang-block">
+  <div class="ak-lang-label lang-ts">TypeScript</div>
+  <pre class="ak-code">const softly = expect.configure({ soft: true });
+await softly(page.locator('#display-name')).toHaveText('Jane Doe');
+await softly(page.locator('#user-email')).toHaveText('jane@example.com');
+await softly(page.locator('#user-role')).toHaveText('Admin');
+await softly.assertAll();</pre>
+</div>
+  <div class="ak-lang-block">
+  <div class="ak-lang-label lang-py">Python</div>
+  <pre class="ak-code"># pytest-playwright-soft-assertions or built-in soft:
+with page.expect_console_message() as _:
+    soft = expect.configure(soft=True)
+    soft(page.locator('#display-name')).to_have_text('Jane Doe')
+    soft(page.locator('#user-email')).to_have_text('jane@example.com')
+    soft(page.locator('#user-role')).to_have_text('Admin')
+    soft.assert_all()</pre>
+</div>
+</div>
+<div class="ak-card">
+  <div class="ak-card-header">
+    <span class="ak-q-num">Q16</span>
+    <span class="ak-topic">Page Object Model</span>
+    <span class="ak-type write">Write Code</span>
+  </div>
+  <div class="ak-lang-block">
+  <div class="ak-lang-label lang-js">JavaScript</div>
+  <pre class="ak-code">class LoginPage {
+  constructor(page) {
+    this.page = page;
+    this.emailInput    = page.getByTestId('email-input');
+    this.passwordInput = page.getByTestId('password-input');
+    this.submitBtn     = page.getByTestId('submit-btn');
+  }
+  async login(email, password) {
+    await this.emailInput.fill(email);
+    await this.passwordInput.fill(password);
+    await this.submitBtn.click();
+  }
+}
+// Test:
+const loginPage = new LoginPage(page);
+await loginPage.login('user@test.com', 'pass123');</pre>
+</div>
+  <div class="ak-lang-block">
+  <div class="ak-lang-label lang-ts">TypeScript</div>
+  <pre class="ak-code">class LoginPage {
+  private emailInput: Locator;
+  private passwordInput: Locator;
+  private submitBtn: Locator;
+  constructor(private page: Page) {
+    this.emailInput    = page.getByTestId('email-input');
+    this.passwordInput = page.getByTestId('password-input');
+    this.submitBtn     = page.getByTestId('submit-btn');
+  }
+  async login(email: string, password: string) {
+    await this.emailInput.fill(email);
+    await this.passwordInput.fill(password);
+    await this.submitBtn.click();
+  }
+}
+const loginPage = new LoginPage(page);
+await loginPage.login('user@test.com', 'pass123');</pre>
+</div>
+  <div class="ak-lang-block">
+  <div class="ak-lang-label lang-py">Python</div>
+  <pre class="ak-code">class LoginPage:
+    def __init__(self, page):
+        self.page = page
+        self.email_input    = page.get_by_test_id('email-input')
+        self.password_input = page.get_by_test_id('password-input')
+        self.submit_btn     = page.get_by_test_id('submit-btn')
+
+    def login(self, email, password):
+        self.email_input.fill(email)
+        self.password_input.fill(password)
+        self.submit_btn.click()
+
+login_page = LoginPage(page)
+login_page.login('user@test.com', 'pass123')</pre>
+</div>
+</div>
+<div class="ak-card">
+  <div class="ak-card-header">
+    <span class="ak-q-num">Q17</span>
+    <span class="ak-topic">Custom Fixtures</span>
+    <span class="ak-type write">Write Code</span>
+  </div>
+  <div class="ak-lang-block">
+  <div class="ak-lang-label lang-js">JavaScript</div>
+  <pre class="ak-code">const test = base.extend({
+  loggedInPage: async ({ page }, use) =&gt; {
+    await page.goto('/login');
+    await page.fill('#user', 'admin');
+    await page.fill('#pass', 'secret');
+    await page.click('#submit');
+    await page.waitForURL('**/dashboard');
+    await use(page);
+  },
+});
+test('check dashboard', async ({ loggedInPage }) =&gt; {
+  await expect(loggedInPage).toHaveURL(/dashboard/);
+});</pre>
+</div>
+  <div class="ak-lang-block">
+  <div class="ak-lang-label lang-ts">TypeScript</div>
+  <pre class="ak-code">const test = base.extend&lt;{ loggedInPage: Page }&gt;({
+  loggedInPage: async ({ page }, use) =&gt; {
+    await page.goto('/login');
+    await page.fill('#user', 'admin');
+    await page.fill('#pass', 'secret');
+    await page.click('#submit');
+    await page.waitForURL('**/dashboard');
+    await use(page);
+  },
+});</pre>
+</div>
+  <div class="ak-lang-block">
+  <div class="ak-lang-label lang-py">Python</div>
+  <pre class="ak-code">@pytest.fixture
+def logged_in_page(page):
+    page.goto('/login')
+    page.fill('#user', 'admin')
+    page.fill('#pass', 'secret')
+    page.click('#submit')
+    page.wait_for_url('**/dashboard')
+    yield page
+
+def test_dashboard(logged_in_page):
+    expect(logged_in_page).to_have_url(re.compile(r'dashboard'))</pre>
+</div>
+</div>
+<div class="ak-card">
+  <div class="ak-card-header">
+    <span class="ak-q-num">Q18</span>
+    <span class="ak-topic">waitForFunction</span>
+    <span class="ak-type write">Write Code</span>
+  </div>
+  <div class="ak-lang-block">
+  <div class="ak-lang-label lang-js">JavaScript</div>
+  <pre class="ak-code">await page.click('#increment');
+await page.click('#increment');
+await page.click('#increment');
+await page.waitForFunction(() =&gt;
+  document.querySelector('#counter').textContent === '3'
+);
+await expect(page.locator('#counter')).toHaveText('3');</pre>
+</div>
+  <div class="ak-lang-block">
+  <div class="ak-lang-label lang-ts">TypeScript</div>
+  <pre class="ak-code">await page.click('#increment');
+await page.click('#increment');
+await page.click('#increment');
+await page.waitForFunction(() =&gt;
+  document.querySelector('#counter')?.textContent === '3'
+);
+await expect(page.locator('#counter')).toHaveText('3');</pre>
+</div>
+  <div class="ak-lang-block">
+  <div class="ak-lang-label lang-py">Python</div>
+  <pre class="ak-code">page.click('#increment')
+page.click('#increment')
+page.click('#increment')
+page.wait_for_function(&quot;document.querySelector('#counter').textContent === '3'&quot;)
+expect(page.locator('#counter')).to_have_text('3')</pre>
+</div>
+</div>
+<div class="ak-card">
+  <div class="ak-card-header">
+    <span class="ak-q-num">Q19</span>
+    <span class="ak-topic">page.evaluate()</span>
+    <span class="ak-type write">Write Code</span>
+  </div>
+  <div class="ak-lang-block">
+  <div class="ak-lang-label lang-js">JavaScript</div>
+  <pre class="ak-code">const scrollTop = await page.evaluate(() =&gt; {
+  window.scrollTo(0, 3000);
+  return document.documentElement.scrollTop;
+});
+expect(scrollTop).toBeGreaterThanOrEqual(2900);</pre>
+</div>
+  <div class="ak-lang-block">
+  <div class="ak-lang-label lang-ts">TypeScript</div>
+  <pre class="ak-code">const scrollTop = await page.evaluate((): number =&gt; {
+  window.scrollTo(0, 3000);
+  return document.documentElement.scrollTop;
+});
+expect(scrollTop).toBeGreaterThanOrEqual(2900);</pre>
+</div>
+  <div class="ak-lang-block">
+  <div class="ak-lang-label lang-py">Python</div>
+  <pre class="ak-code">scroll_top = page.evaluate('() =&gt; { window.scrollTo(0,3000); return document.documentElement.scrollTop; }')
+assert scroll_top &gt;= 2900</pre>
+</div>
+</div>
+<div class="ak-card">
+  <div class="ak-card-header">
+    <span class="ak-q-num">Q20</span>
+    <span class="ak-topic">Screenshots</span>
+    <span class="ak-type write">Write Code</span>
+  </div>
+  <div class="ak-lang-block">
+  <div class="ak-lang-label lang-js">JavaScript</div>
+  <pre class="ak-code">await expect(page.locator('#chart-widget')).toBeVisible();
+await page.locator('#chart-widget').screenshot({ path: './screenshots/chart.png' });</pre>
+</div>
+  <div class="ak-lang-block">
+  <div class="ak-lang-label lang-ts">TypeScript</div>
+  <pre class="ak-code">await expect(page.locator('#chart-widget')).toBeVisible();
+await page.locator('#chart-widget').screenshot({ path: './screenshots/chart.png' });</pre>
+</div>
+  <div class="ak-lang-block">
+  <div class="ak-lang-label lang-py">Python</div>
+  <pre class="ak-code">expect(page.locator('#chart-widget')).to_be_visible()
+page.locator('#chart-widget').screenshot(path='./screenshots/chart.png')</pre>
+</div>
+</div>
+<div class="ak-card">
+  <div class="ak-card-header">
+    <span class="ak-q-num">Q21</span>
+    <span class="ak-topic">Scroll Actions</span>
+    <span class="ak-type write">Write Code</span>
+  </div>
+  <div class="ak-lang-block">
+  <div class="ak-lang-label lang-js">JavaScript</div>
+  <pre class="ak-code">await page.locator('#site-footer').scrollIntoViewIfNeeded();
+await expect(page.locator('#site-footer a')).toBeVisible();</pre>
+</div>
+  <div class="ak-lang-block">
+  <div class="ak-lang-label lang-ts">TypeScript</div>
+  <pre class="ak-code">await page.locator('#site-footer').scrollIntoViewIfNeeded();
+await expect(page.locator('#site-footer a')).toBeVisible();</pre>
+</div>
+  <div class="ak-lang-block">
+  <div class="ak-lang-label lang-py">Python</div>
+  <pre class="ak-code">page.locator('#site-footer').scroll_into_view_if_needed()
+expect(page.locator('#site-footer a')).to_be_visible()</pre>
+</div>
+</div>
+<div class="ak-card">
+  <div class="ak-card-header">
+    <span class="ak-q-num">Q22</span>
+    <span class="ak-topic">Attribute Assertions</span>
+    <span class="ak-type write">Write Code</span>
+  </div>
+  <div class="ak-lang-block">
+  <div class="ak-lang-label lang-js">JavaScript</div>
+  <pre class="ak-code">await expect(page.locator('#download-link')).toHaveAttribute('href', '/files/report.pdf');
+await expect(page.locator('#download-link')).toHaveAttribute('aria-label', 'Download annual report');</pre>
+</div>
+  <div class="ak-lang-block">
+  <div class="ak-lang-label lang-ts">TypeScript</div>
+  <pre class="ak-code">await expect(page.locator('#download-link')).toHaveAttribute('href', '/files/report.pdf');
+await expect(page.locator('#download-link')).toHaveAttribute('aria-label', 'Download annual report');</pre>
+</div>
+  <div class="ak-lang-block">
+  <div class="ak-lang-label lang-py">Python</div>
+  <pre class="ak-code">expect(page.locator('#download-link')).to_have_attribute('href', '/files/report.pdf')
+expect(page.locator('#download-link')).to_have_attribute('aria-label', 'Download annual report')</pre>
+</div>
+</div>
+<div class="ak-card">
+  <div class="ak-card-header">
+    <span class="ak-q-num">Q23</span>
+    <span class="ak-topic">Browser Context / Storage State</span>
+    <span class="ak-type write">Write Code</span>
+  </div>
+  <div class="ak-lang-block">
+  <div class="ak-lang-label lang-js">JavaScript</div>
+  <pre class="ak-code">// After login:
+await context.storageState({ path: './auth.json' });
+// New context with saved state:
+const newContext = await browser.newContext({ storageState: './auth.json' });
+const newPage    = await newContext.newPage();
+await newPage.goto('/dashboard');
+await expect(newPage).toHaveURL(/dashboard/);</pre>
+</div>
+  <div class="ak-lang-block">
+  <div class="ak-lang-label lang-ts">TypeScript</div>
+  <pre class="ak-code">await context.storageState({ path: './auth.json' });
+const newContext = await browser.newContext({ storageState: './auth.json' });
+const newPage    = await newContext.newPage();
+await newPage.goto('/dashboard');
+await expect(newPage).toHaveURL(/dashboard/);</pre>
+</div>
+  <div class="ak-lang-block">
+  <div class="ak-lang-label lang-py">Python</div>
+  <pre class="ak-code">context.storage_state(path='./auth.json')
+new_context = browser.new_context(storage_state='./auth.json')
+new_page = new_context.new_page()
+new_page.goto('/dashboard')
+expect(new_page).to_have_url(re.compile(r'dashboard'))</pre>
+</div>
+</div>
+<div class="ak-card">
+  <div class="ak-card-header">
+    <span class="ak-q-num">Q24</span>
+    <span class="ak-topic">Response Modification</span>
+    <span class="ak-type write">Write Code</span>
+  </div>
+  <div class="ak-lang-block">
+  <div class="ak-lang-label lang-js">JavaScript</div>
+  <pre class="ak-code">await page.route('**/api/config', async route =&gt; {
+  const response = await route.fetch();
+  const json = await response.json();
+  json.betaEnabled = true;
+  await route.fulfill({ json });
+});
+await page.goto('/');
+await expect(page.locator('#beta-feature')).toBeVisible();</pre>
+</div>
+  <div class="ak-lang-block">
+  <div class="ak-lang-label lang-ts">TypeScript</div>
+  <pre class="ak-code">await page.route('**/api/config', async route =&gt; {
+  const response = await route.fetch();
+  const json = await response.json();
+  json.betaEnabled = true;
+  await route.fulfill({ json });
+});
+await page.goto('/');
+await expect(page.locator('#beta-feature')).toBeVisible();</pre>
+</div>
+  <div class="ak-lang-block">
+  <div class="ak-lang-label lang-py">Python</div>
+  <pre class="ak-code">def handle(route):
+    response = route.fetch()
+    body = response.json()
+    body['betaEnabled'] = True
+    route.fulfill(json=body)
+page.route('**/api/config', handle)
+page.goto('/')
+expect(page.locator('#beta-feature')).to_be_visible()</pre>
+</div>
+</div>
+<div class="ak-card">
+  <div class="ak-card-header">
+    <span class="ak-q-num">Q25</span>
+    <span class="ak-topic">File Download</span>
+    <span class="ak-type write">Write Code</span>
+  </div>
+  <div class="ak-lang-block">
+  <div class="ak-lang-label lang-js">JavaScript</div>
+  <pre class="ak-code">const [ download ] = await Promise.all([
+  page.waitForEvent('download'),
+  page.click('#export-btn'),
+]);
+expect(download.suggestedFilename()).toContain('export');
+expect(download.suggestedFilename()).toMatch(/\.csv$/);
+await download.saveAs('./downloads/export.csv');</pre>
+</div>
+  <div class="ak-lang-block">
+  <div class="ak-lang-label lang-ts">TypeScript</div>
+  <pre class="ak-code">const [ download ] = await Promise.all([
+  page.waitForEvent('download'),
+  page.click('#export-btn'),
+]);
+expect(download.suggestedFilename()).toContain('export');
+expect(download.suggestedFilename()).toMatch(/\.csv$/);
+await download.saveAs('./downloads/export.csv');</pre>
+</div>
+  <div class="ak-lang-block">
+  <div class="ak-lang-label lang-py">Python</div>
+  <pre class="ak-code">with page.expect_download() as dl_info:
+    page.click('#export-btn')
+download = dl_info.value
+assert 'export' in download.suggested_filename()
+assert download.suggested_filename().endswith('.csv')
+download.save_as('./downloads/export.csv')</pre>
+</div>
+</div>
+<div class="ak-card">
+  <div class="ak-card-header">
+    <span class="ak-q-num">Q26</span>
+    <span class="ak-topic">Shadow DOM</span>
+    <span class="ak-type write">Write Code</span>
+  </div>
+  <div class="ak-lang-block">
+  <div class="ak-lang-label lang-js">JavaScript</div>
+  <pre class="ak-code">// Playwright auto-pierces Shadow DOM with CSS selectors:
+await page.locator('#shadow-username').fill('admin');
+await page.locator('#shadow-pass').fill('pw123');
+await page.locator('#shadow-login').click();
+await expect(page).toHaveURL(/\/home/);</pre>
+</div>
+  <div class="ak-lang-block">
+  <div class="ak-lang-label lang-ts">TypeScript</div>
+  <pre class="ak-code">await page.locator('#shadow-username').fill('admin');
+await page.locator('#shadow-pass').fill('pw123');
+await page.locator('#shadow-login').click();
+await expect(page).toHaveURL(/\/home/);</pre>
+</div>
+  <div class="ak-lang-block">
+  <div class="ak-lang-label lang-py">Python</div>
+  <pre class="ak-code">page.locator('#shadow-username').fill('admin')
+page.locator('#shadow-pass').fill('pw123')
+page.locator('#shadow-login').click()
+expect(page).to_have_url(re.compile(r'/home'))</pre>
+</div>
+</div>
+<div class="ak-card">
+  <div class="ak-card-header">
+    <span class="ak-q-num">Q27</span>
+    <span class="ak-topic">expect.poll()</span>
+    <span class="ak-type write">Write Code</span>
+  </div>
+  <div class="ak-lang-block">
+  <div class="ak-lang-label lang-js">JavaScript</div>
+  <pre class="ak-code">await expect.poll(
+  async () =&gt; await page.locator('#job-status').textContent(),
+  { timeout: 15000, intervals: [500] }
+).toBe('Done');</pre>
+</div>
+  <div class="ak-lang-block">
+  <div class="ak-lang-label lang-ts">TypeScript</div>
+  <pre class="ak-code">await expect.poll(
+  async () =&gt; await page.locator('#job-status').textContent(),
+  { timeout: 15000, intervals: [500] }
+).toBe('Done');</pre>
+</div>
+  <div class="ak-lang-block">
+  <div class="ak-lang-label lang-py">Python</div>
+  <pre class="ak-code"># Python uses expect(locator).to_have_text with polling:
+expect(page.locator('#job-status')).to_have_text('Done', timeout=15000)
+# Or with manual poll:
+import time
+for _ in range(30):
+    if page.locator('#job-status').inner_text() == 'Done':
+        break
+    time.sleep(0.5)</pre>
+</div>
+</div>
+<div class="ak-card">
+  <div class="ak-card-header">
+    <span class="ak-q-num">Q28</span>
+    <span class="ak-topic">API Testing</span>
+    <span class="ak-type write">Write Code</span>
+  </div>
+  <div class="ak-lang-block">
+  <div class="ak-lang-label lang-js">JavaScript</div>
+  <pre class="ak-code">const loginResp = await request.post('/api/auth/login', {
+  data: { username: 'admin', password: 'secret' }
+});
+const { token } = await loginResp.json();
+
+const userResp = await request.get('/api/users/1', {
+  headers: { 'Authorization': `Bearer ${token}` }
+});
+expect(userResp.status()).toBe(200);
+const user = await userResp.json();
+expect(user).toHaveProperty('name');</pre>
+</div>
+  <div class="ak-lang-block">
+  <div class="ak-lang-label lang-ts">TypeScript</div>
+  <pre class="ak-code">const loginResp = await request.post('/api/auth/login', {
+  data: { username: 'admin', password: 'secret' }
+});
+const { token } = await loginResp.json();
+const userResp = await request.get('/api/users/1', {
+  headers: { 'Authorization': \`Bearer \${token}\` }
+});
+expect(userResp.status()).toBe(200);
+const user = await userResp.json();
+expect(user).toHaveProperty('name');</pre>
+</div>
+  <div class="ak-lang-block">
+  <div class="ak-lang-label lang-py">Python</div>
+  <pre class="ak-code">login_resp = request.post('/api/auth/login',
+    data={'username': 'admin', 'password': 'secret'})
+token = login_resp.json()['token']
+user_resp = request.get('/api/users/1',
+    headers={'Authorization': f'Bearer {token}'})
+assert user_resp.status == 200
+user = user_resp.json()
+assert 'name' in user</pre>
+</div>
+</div>
+<div class="ak-card">
+  <div class="ak-card-header">
+    <span class="ak-q-num">Q29</span>
+    <span class="ak-topic">Geolocation Mocking</span>
+    <span class="ak-type write">Write Code</span>
+  </div>
+  <div class="ak-lang-block">
+  <div class="ak-lang-label lang-js">JavaScript</div>
+  <pre class="ak-code">const context = await browser.newContext({
+  geolocation: { latitude: 51.5074, longitude: -0.1278 },
+  permissions: ['geolocation'],
+});
+const page = await context.newPage();
+await page.goto('/');
+await page.click('#get-location');
+await expect(page.locator('#location-display')).toContainText('51.5074');</pre>
+</div>
+  <div class="ak-lang-block">
+  <div class="ak-lang-label lang-ts">TypeScript</div>
+  <pre class="ak-code">const context = await browser.newContext({
+  geolocation: { latitude: 51.5074, longitude: -0.1278 },
+  permissions: ['geolocation'],
+});
+const page = await context.newPage();
+await page.goto('/');
+await page.click('#get-location');
+await expect(page.locator('#location-display')).toContainText('51.5074');</pre>
+</div>
+  <div class="ak-lang-block">
+  <div class="ak-lang-label lang-py">Python</div>
+  <pre class="ak-code">context = browser.new_context(
+    geolocation={'latitude': 51.5074, 'longitude': -0.1278},
+    permissions=['geolocation']
+)
+page = context.new_page()
+page.goto('/')
+page.click('#get-location')
+expect(page.locator('#location-display')).to_contain_text('51.5074')</pre>
+</div>
+</div>
+<div class="ak-card">
+  <div class="ak-card-header">
+    <span class="ak-q-num">Q30</span>
+    <span class="ak-topic">Tracing</span>
+    <span class="ak-type write">Write Code</span>
+  </div>
+  <div class="ak-lang-block">
+  <div class="ak-lang-label lang-js">JavaScript</div>
+  <pre class="ak-code">await context.tracing.start({ screenshots: true, snapshots: true });
+await page.fill('input[name=&quot;card&quot;]', '4111111111111111');
+await page.click('button[type=&quot;submit&quot;]');
+await context.tracing.stop({ path: './trace/checkout.zip' });</pre>
+</div>
+  <div class="ak-lang-block">
+  <div class="ak-lang-label lang-ts">TypeScript</div>
+  <pre class="ak-code">await context.tracing.start({ screenshots: true, snapshots: true });
+await page.fill('input[name=&quot;card&quot;]', '4111111111111111');
+await page.click('button[type=&quot;submit&quot;]');
+await context.tracing.stop({ path: './trace/checkout.zip' });</pre>
+</div>
+  <div class="ak-lang-block">
+  <div class="ak-lang-label lang-py">Python</div>
+  <pre class="ak-code">context.tracing.start(screenshots=True, snapshots=True)
+page.fill('input[name=&quot;card&quot;]', '4111111111111111')
+page.click('button[type=&quot;submit&quot;]')
+context.tracing.stop(path='./trace/checkout.zip')</pre>
+</div>
+</div>
+<div class="ak-card">
+  <div class="ak-card-header">
+    <span class="ak-q-num">Q31</span>
+    <span class="ak-topic">Confirm Dialog Dismiss</span>
+    <span class="ak-type write">Write Code</span>
+  </div>
+  <div class="ak-lang-block">
+  <div class="ak-lang-label lang-js">JavaScript</div>
+  <pre class="ak-code">page.on('dialog', async dialog =&gt; {
+  await dialog.dismiss();
+});
+await page.click('#delete-btn');
+await expect(page.locator('#item')).toBeVisible();</pre>
+</div>
+  <div class="ak-lang-block">
+  <div class="ak-lang-label lang-ts">TypeScript</div>
+  <pre class="ak-code">page.on('dialog', async (dialog) =&gt; {
+  await dialog.dismiss();
+});
+await page.click('#delete-btn');
+await expect(page.locator('#item')).toBeVisible();</pre>
+</div>
+  <div class="ak-lang-block">
+  <div class="ak-lang-label lang-py">Python</div>
+  <pre class="ak-code">def handle_dialog(dialog):
+    dialog.dismiss()
+page.on('dialog', handle_dialog)
+page.click('#delete-btn')
+expect(page.locator('#item')).to_be_visible()</pre>
+</div>
+</div>
+<div class="ak-card">
+  <div class="ak-card-header">
+    <span class="ak-q-num">Q32</span>
+    <span class="ak-topic">Checkbox / Radio Operations</span>
+    <span class="ak-type write">Write Code</span>
+  </div>
+  <div class="ak-lang-block">
+  <div class="ak-lang-label lang-js">JavaScript</div>
+  <pre class="ak-code">await page.locator('#js-skill').check();
+await page.locator('#ts-skill').check();
+await page.locator('#java-skill').uncheck();
+await expect(page.locator('#js-skill')).toBeChecked();
+await expect(page.locator('#ts-skill')).toBeChecked();
+await expect(page.locator('#java-skill')).not.toBeChecked();</pre>
+</div>
+  <div class="ak-lang-block">
+  <div class="ak-lang-label lang-ts">TypeScript</div>
+  <pre class="ak-code">await page.locator('#js-skill').check();
+await page.locator('#ts-skill').check();
+await page.locator('#java-skill').uncheck();
+await expect(page.locator('#js-skill')).toBeChecked();
+await expect(page.locator('#ts-skill')).toBeChecked();
+await expect(page.locator('#java-skill')).not.toBeChecked();</pre>
+</div>
+  <div class="ak-lang-block">
+  <div class="ak-lang-label lang-py">Python</div>
+  <pre class="ak-code">page.locator('#js-skill').check()
+page.locator('#ts-skill').check()
+page.locator('#java-skill').uncheck()
+expect(page.locator('#js-skill')).to_be_checked()
+expect(page.locator('#ts-skill')).to_be_checked()
+expect(page.locator('#java-skill')).not_.to_be_checked()</pre>
+</div>
+</div>
+<div class="ak-card">
+  <div class="ak-card-header">
+    <span class="ak-q-num">Q33</span>
+    <span class="ak-topic">waitForLoadState</span>
+    <span class="ak-type write">Write Code</span>
+  </div>
+  <div class="ak-lang-block">
+  <div class="ak-lang-label lang-js">JavaScript</div>
+  <pre class="ak-code">await page.goto('https://spa.example.com');
+await page.waitForLoadState('networkidle');
+await expect(page.locator('#spa-root')).toBeVisible();
+await expect(page).not.toHaveURL(/\/error/);</pre>
+</div>
+  <div class="ak-lang-block">
+  <div class="ak-lang-label lang-ts">TypeScript</div>
+  <pre class="ak-code">await page.goto('https://spa.example.com');
+await page.waitForLoadState('networkidle');
+await expect(page.locator('#spa-root')).toBeVisible();
+await expect(page).not.toHaveURL(/\/error/);</pre>
+</div>
+  <div class="ak-lang-block">
+  <div class="ak-lang-label lang-py">Python</div>
+  <pre class="ak-code">page.goto('https://spa.example.com')
+page.wait_for_load_state('networkidle')
+expect(page.locator('#spa-root')).to_be_visible()
+expect(page).not_to_have_url(re.compile(r'/error'))</pre>
+</div>
+</div>
+<div class="ak-card">
+  <div class="ak-card-header">
+    <span class="ak-q-num">Q34</span>
+    <span class="ak-topic">Locator Chaining &amp; filter()</span>
+    <span class="ak-type write">Write Code</span>
+  </div>
+  <div class="ak-lang-block">
+  <div class="ak-lang-label lang-js">JavaScript</div>
+  <pre class="ak-code">const incomplete = page.locator('.todo').filter({ hasNot: page.locator('.done') });
+await expect(incomplete).toHaveCount(2);
+await expect(incomplete.first()).toContainText('Write tests');</pre>
+</div>
+  <div class="ak-lang-block">
+  <div class="ak-lang-label lang-ts">TypeScript</div>
+  <pre class="ak-code">const incomplete = page.locator('.todo').filter({ hasNot: page.locator('.done') });
+await expect(incomplete).toHaveCount(2);
+await expect(incomplete.first()).toContainText('Write tests');</pre>
+</div>
+  <div class="ak-lang-block">
+  <div class="ak-lang-label lang-py">Python</div>
+  <pre class="ak-code">incomplete = page.locator('.todo').filter(has_not=page.locator('.done'))
+expect(incomplete).to_have_count(2)
+expect(incomplete.first).to_contain_text('Write tests')</pre>
+</div>
+</div>
+<div class="ak-card">
+  <div class="ak-card-header">
+    <span class="ak-q-num">Q35</span>
+    <span class="ak-topic">Mobile Emulation</span>
+    <span class="ak-type write">Write Code</span>
+  </div>
+  <div class="ak-lang-block">
+  <div class="ak-lang-label lang-js">JavaScript</div>
+  <pre class="ak-code">const { devices } = require('@playwright/test');
+const iPhone = devices['iPhone 13'];
+const context = await browser.newContext({ ...iPhone });
+const page    = await context.newPage();
+await page.goto('/');
+await expect(page.locator('.mobile-nav')).toBeVisible();
+await expect(page.locator('.desktop-nav')).toBeHidden();
+await page.locator('.hamburger').click();</pre>
+</div>
+  <div class="ak-lang-block">
+  <div class="ak-lang-label lang-ts">TypeScript</div>
+  <pre class="ak-code">import { devices } from '@playwright/test';
+const iPhone  = devices['iPhone 13'];
+const context = await browser.newContext({ ...iPhone });
+const page    = await context.newPage();
+await page.goto('/');
+await expect(page.locator('.mobile-nav')).toBeVisible();
+await expect(page.locator('.desktop-nav')).toBeHidden();
+await page.locator('.hamburger').click();</pre>
+</div>
+  <div class="ak-lang-block">
+  <div class="ak-lang-label lang-py">Python</div>
+  <pre class="ak-code">from playwright.sync_api import sync_playwright
+with sync_playwright() as p:
+    iphone = p.devices['iPhone 13']
+    context = browser.new_context(**iphone)
+    page = context.new_page()
+    page.goto('/')
+    expect(page.locator('.mobile-nav')).to_be_visible()
+    expect(page.locator('.desktop-nav')).to_be_hidden()
+    page.locator('.hamburger').click()</pre>
+</div>
+</div>
+
+  <h2 class="section-heading">MCQ Questions — Answers & Explanations (Q36–Q50)</h2>
+
+<div class="ak-card">
+  <div class="ak-card-header">
+    <span class="ak-q-num">Q36</span>
+    <span class="ak-type mcq">MCQ</span>
+    <span class="ak-correct-badge">Answer: B</span>
+  </div>
+  <div class="ak-explanation">Playwright auto-waits before click(). The assertion on #result can still time out if the action completes later than the default 5s timeout — increase timeout or use waitForLoadState.</div>
+</div>
+<div class="ak-card">
+  <div class="ak-card-header">
+    <span class="ak-q-num">Q37</span>
+    <span class="ak-type mcq">MCQ</span>
+    <span class="ak-correct-badge">Answer: B</span>
+  </div>
+  <div class="ak-explanation">Official Playwright order: getByRole (mirrors accessibility) → getByTestId (explicit test hooks) → getByText/getByLabel → CSS/XPath as last resort.</div>
+</div>
+<div class="ak-card">
+  <div class="ak-card-header">
+    <span class="ak-q-num">Q38</span>
+    <span class="ak-type mcq">MCQ</span>
+    <span class="ak-correct-badge">Answer: B</span>
+  </div>
+  <div class="ak-explanation">Browser contexts are fully isolated environments. They share the browser process but have separate cookies, storage, sessions — like different incognito windows.</div>
+</div>
+<div class="ak-card">
+  <div class="ak-card-header">
+    <span class="ak-q-num">Q39</span>
+    <span class="ak-type mcq">MCQ</span>
+    <span class="ak-correct-badge">Answer: C</span>
+  </div>
+  <div class="ak-explanation">page.route() is the interception API — it can fulfill, abort, or continue requests. page.on('request') is observation-only and cannot block or modify the request.</div>
+</div>
+<div class="ak-card">
+  <div class="ak-card-header">
+    <span class="ak-q-num">Q40</span>
+    <span class="ak-type mcq">MCQ</span>
+    <span class="ak-correct-badge">Answer: C</span>
+  </div>
+  <div class="ak-explanation">fullyParallel:true breaks the file-level barrier — individual tests within a file can run in parallel across workers, not just different files.</div>
+</div>
+<div class="ak-card">
+  <div class="ak-card-header">
+    <span class="ak-q-num">Q41</span>
+    <span class="ak-type mcq">MCQ</span>
+    <span class="ak-correct-badge">Answer: C</span>
+  </div>
+  <div class="ak-explanation">Soft assertions collect failures, continue execution, then throw them all together at assertAll(). The test only fails after assertAll() is called.</div>
+</div>
+<div class="ak-card">
+  <div class="ak-card-header">
+    <span class="ak-q-num">Q42</span>
+    <span class="ak-type mcq">MCQ</span>
+    <span class="ak-correct-badge">Answer: C</span>
+  </div>
+  <div class="ak-explanation">scope:'worker' means the fixture is created once per worker process and shared by all tests running in that worker, reducing expensive setup cost.</div>
+</div>
+<div class="ak-card">
+  <div class="ak-card-header">
+    <span class="ak-q-num">Q43</span>
+    <span class="ak-type mcq">MCQ</span>
+    <span class="ak-correct-badge">Answer: C</span>
+  </div>
+  <div class="ak-explanation">networkidle waits until there are no network connections for 500ms. Ideal for SPAs that fire async fetch/XHR requests after the initial DOM load.</div>
+</div>
+<div class="ak-card">
+  <div class="ak-card-header">
+    <span class="ak-q-num">Q44</span>
+    <span class="ak-type mcq">MCQ</span>
+    <span class="ak-correct-badge">Answer: B</span>
+  </div>
+  <div class="ak-explanation">test.step() creates labeled groups in the HTML report and Trace Viewer. It has no effect on retries or browser context — it is purely for reporting.</div>
+</div>
+<div class="ak-card">
+  <div class="ak-card-header">
+    <span class="ak-q-num">Q45</span>
+    <span class="ak-type mcq">MCQ</span>
+    <span class="ak-correct-badge">Answer: B</span>
+  </div>
+  <div class="ak-explanation">Test-level configuration overrides global config. retries:0 at test level means zero retries for that specific test regardless of the global setting.</div>
+</div>
+<div class="ak-card">
+  <div class="ak-card-header">
+    <span class="ak-q-num">Q46</span>
+    <span class="ak-type mcq">MCQ</span>
+    <span class="ak-correct-badge">Answer: B</span>
+  </div>
+  <div class="ak-explanation">getByRole('button', {name:'Close dialog'}) matches by ARIA role + accessible name (aria-label). This is the most resilient and semantically correct approach.</div>
+</div>
+<div class="ak-card">
+  <div class="ak-card-header">
+    <span class="ak-q-num">Q47</span>
+    <span class="ak-type mcq">MCQ</span>
+    <span class="ak-correct-badge">Answer: C</span>
+  </div>
+  <div class="ak-explanation">on-first-retry records a trace only when a test fails the first time and enters its first retry cycle. No retry = no trace file.</div>
+</div>
+<div class="ak-card">
+  <div class="ak-card-header">
+    <span class="ak-q-num">Q48</span>
+    <span class="ak-type mcq">MCQ</span>
+    <span class="ak-correct-badge">Answer: B</span>
+  </div>
+  <div class="ak-explanation">globalSetup runs once before the entire suite in a separate Node.js process. It cannot use page/browser fixtures; use it for DB seeding, token generation, etc.</div>
+</div>
+<div class="ak-card">
+  <div class="ak-card-header">
+    <span class="ak-q-num">Q49</span>
+    <span class="ak-type mcq">MCQ</span>
+    <span class="ak-correct-badge">Answer: B</span>
+  </div>
+  <div class="ak-explanation">Playwright enforces strict mode — locators must match exactly one element during action calls. Multiple matches throw a StrictModeViolation error.</div>
+</div>
+<div class="ak-card">
+  <div class="ak-card-header">
+    <span class="ak-q-num">Q50</span>
+    <span class="ak-type mcq">MCQ</span>
+    <span class="ak-correct-badge">Answer: B</span>
+  </div>
+  <div class="ak-explanation">expect(fn).toPass() retries the entire async function block (including the fetch call) until all inner assertions pass or timeout. Unlike expect.poll() it can wrap multi-step logic.</div>
+</div>
+</div>
+
+  </div><!-- end #mainContent -->
+
+  <script>
+    const CORRECT_HASH = "5d43820495cfb413a3e21675f6ebd2de0914dec40456f55bd722e5a9d1ebe4f8";
+    async function sha256(msg) {
+      const buf  = new TextEncoder().encode(msg);
+      const hash = await crypto.subtle.digest("SHA-256", buf);
+      return Array.from(new Uint8Array(hash)).map(b=>b.toString(16).padStart(2,"0")).join("");
+    }
+    async function checkPwd() {
+      const input = document.getElementById("pwInput").value;
+      const errEl = document.getElementById("pwError");
+      if (!input) { errEl.textContent="Please enter a password."; return; }
+      const hash = await sha256(input);
+      if (hash === CORRECT_HASH) {
+        document.getElementById("lockScreen").style.display="none";
+        document.getElementById("mainContent").style.display="block";
+        errEl.textContent="";
+        sessionStorage.setItem("pw_ak_unlocked","1");
+      } else {
+        errEl.textContent="Incorrect password. Please try again.";
+        document.getElementById("pwInput").value="";
+        document.getElementById("pwInput").focus();
+      }
+    }
+    if (sessionStorage.getItem("pw_ak_unlocked")==="1") {
+      document.getElementById("lockScreen").style.display="none";
+      document.getElementById("mainContent").style.display="block";
+    }
+  </script>
+</body>
+</html>

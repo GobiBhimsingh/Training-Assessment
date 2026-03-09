@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Playwright Interview Practice — QA Automation</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- ── Page Header ─────────────────────────────────────────────────────── -->
+  <header class="page-header">
+    <div class="wrap">
+      <div class="header-badge">QA Automation Interview</div>
+      <h1>Playwright Practical Interview <span class="pw-logo">PW</span></h1>
+      <p>50 advanced practical questions — write real Playwright code to solve each scenario</p>
+    </div>
+  </header>
+
+  <!-- ── Language Selector Bar ───────────────────────────────────────────── -->
+  <div class="lang-bar" id="langBar">
+    <div class="wrap">
+      <span class="lang-label">Your Language:</span>
+      <button class="lang-btn" id="btn-js"  onclick="setLang('js')">JavaScript</button>
+      <button class="lang-btn" id="btn-ts"  onclick="setLang('ts')">TypeScript</button>
+      <button class="lang-btn" id="btn-py"  onclick="setLang('py')">Python</button>
+      <span class="lang-hint" id="langHint">↑ Select your preferred language before starting</span>
+    </div>
+  </div>
+
+  <!-- ── Instructions ────────────────────────────────────────────────────── -->
+  <div class="instructions">
+    <div class="instr-card">
+      <strong>How to use this paper:</strong>
+      <ol>
+        <li>Select your language (<strong>JavaScript / TypeScript / Python</strong>) in the bar above — this determines how your answers are validated.</li>
+        <li>Read the <strong>HTML snippet</strong> shown for each question — that is the page under test.</li>
+        <li>Write your Playwright code in the editor. You can use multi-line code, imports, and full test blocks.</li>
+        <li>Click <strong>Check Answer</strong> — if correct, the <strong>Next</strong> button unlocks. Wrong answers can be retried unlimited times.</li>
+        <li>When all questions are done (or you click <strong>Submit All</strong>) you'll see your final score.</li>
+        <li>The <strong>Answer Key</strong> file is trainer-only and password protected.</li>
+      </ol>
+    </div>
+  </div>
+
+  <!-- ── Progress bar ────────────────────────────────────────────────────── -->
+  <div class="progress-wrap" id="progressWrap">
+    <div class="progress-row">
+      <span id="progressLabel">Question 1 of 50</span>
+      <span id="progressPct">0% complete</span>
+    </div>
+    <div class="progress-bar-bg">
+      <div class="progress-bar-fill" id="progressFill"></div>
+    </div>
+  </div>
+
+  <!-- ── Step Navigator ──────────────────────────────────────────────────── -->
+  <div class="step-nav" id="stepNav"></div>
+
+  <!-- ── Questions Container ─────────────────────────────────────────────── -->
+  <div class="main-wrap" id="questionsContainer"></div>
+
+  <!-- ── Result Section ──────────────────────────────────────────────────── -->
+  <div class="main-wrap hidden" id="resultSection">
+    <div class="result-section">
+      <h2>🎯 Interview Result</h2>
+      <div class="result-grid">
+        <div class="result-box"><div class="res-num" id="res-total">—</div><div class="res-lbl">Total</div></div>
+        <div class="result-box"><div class="res-num" id="res-correct" style="color:#16a34a">—</div><div class="res-lbl">Correct</div></div>
+        <div class="result-box"><div class="res-num" id="res-wrong" style="color:#dc2626">—</div><div class="res-lbl">Wrong</div></div>
+        <div class="result-box"><div class="res-num" id="res-pct">—</div><div class="res-lbl">Score</div></div>
+      </div>
+      <div class="perf-msg" id="performanceMsg"></div>
+      <button class="btn-restart" onclick="restartQuiz()">↺ Restart</button>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
