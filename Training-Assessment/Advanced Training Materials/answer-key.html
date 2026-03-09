@@ -1,0 +1,1336 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Answer Key — XPath Advanced Paper 2 (Trainer Only)</title>
+  <style>
+    /* ── Reset ───────────────────────────────────────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --primary:    #1e6b6b;
+      --primary-dk: #144f4f;
+      --accent:     #7c3aed;
+      --bg:         #f4f6fb;
+      --surface:    #ffffff;
+      --border:     #dce1ee;
+      --text:       #1a202e;
+      --muted:      #55617a;
+      --code-bg:    #eef2f7;
+      --correct:    #16a34a;
+      --correct-bg: #dcfce7;
+      --tag:        #d1fae5;
+      --tag-text:   #065f46;
+      --mono:       'Consolas', 'Courier New', monospace;
+      --sans:       'Segoe UI', Arial, sans-serif;
+    }
+
+    body {
+      font-family:    var(--sans);
+      background:     var(--bg);
+      color:          var(--text);
+      font-size:      14px;
+      line-height:    1.65;
+      padding-bottom: 60px;
+    }
+
+    .page-wrap { max-width: 900px; margin: 0 auto; padding: 0 16px; }
+
+    /* ── Header ──────────────────────────────────────────────────────── */
+    .ak-header {
+      background:    linear-gradient(135deg, var(--primary) 0%, #2d4a7a 100%);
+      color:         #fff;
+      padding:       26px 0 20px;
+      margin-bottom: 30px;
+      border-bottom: 4px solid var(--primary-dk);
+    }
+    .ak-header .page-wrap { display: flex; flex-direction: column; gap: 5px; }
+
+    .badge-row { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 8px; }
+
+    .badge {
+      display:       inline-block;
+      border-radius: 20px;
+      font-size:     11px;
+      letter-spacing:.08em;
+      text-transform:uppercase;
+      padding:       3px 12px;
+    }
+    .badge-paper  { background: rgba(255,255,255,.15); border: 1px solid rgba(255,255,255,.3); }
+    .badge-trainer{ background: rgba(220,38,38,.6);    border: 1px solid rgba(252,165,165,.6); }
+
+    .ak-header h1 { font-size: 24px; font-weight: 700; }
+    .ak-header p  { font-size: 13px; opacity: .82; }
+
+    /* ── Warning banner ──────────────────────────────────────────────── */
+    .trainer-warning {
+      background:    #fef3c7;
+      border:        1px solid #f59e0b;
+      border-left:   5px solid #d97706;
+      border-radius: 6px;
+      padding:       14px 18px;
+      margin-bottom: 28px;
+      font-size:     13.5px;
+      color:         #78350f;
+    }
+    .trainer-warning strong { display: block; margin-bottom: 4px; font-size: 14px; }
+
+    /* ── Section header ──────────────────────────────────────────────── */
+    .section-title {
+      background:    var(--primary);
+      color:         #fff;
+      padding:       10px 18px;
+      border-radius: 6px;
+      font-size:     13px;
+      font-weight:   700;
+      letter-spacing:.04em;
+      margin:        28px 0 14px;
+      display:       flex;
+      align-items:   center;
+      gap:           10px;
+    }
+    .section-title .sec-num {
+      background: rgba(255,255,255,.2);
+      border-radius: 4px;
+      padding: 1px 8px;
+      font-size: 11px;
+    }
+
+    /* ── Question answer card ────────────────────────────────────────── */
+    .ak-card {
+      background:    var(--surface);
+      border:        1px solid var(--border);
+      border-radius: 8px;
+      padding:       20px 22px;
+      margin-bottom: 16px;
+      box-shadow:    0 1px 6px rgba(0,0,0,.06);
+    }
+
+    .ak-card-header {
+      display:         flex;
+      justify-content: space-between;
+      align-items:     flex-start;
+      flex-wrap:       wrap;
+      gap:             8px;
+      margin-bottom:   14px;
+      padding-bottom:  10px;
+      border-bottom:   1px solid var(--border);
+    }
+
+    .ak-qnum {
+      font-size:   13px;
+      font-weight: 700;
+      color:       var(--primary);
+    }
+
+    .ak-topic {
+      background:    var(--tag);
+      color:         var(--tag-text);
+      font-size:     11.5px;
+      font-weight:   600;
+      padding:       3px 10px;
+      border-radius: 20px;
+    }
+
+    .ak-type-badge {
+      font-size:     11px;
+      font-weight:   700;
+      padding:       2px 9px;
+      border-radius: 20px;
+      text-transform:uppercase;
+      letter-spacing:.06em;
+    }
+    .ak-type-write { background: #dbeafe; color: #1e40af; }
+    .ak-type-mcq   { background: #ede9fe; color: #5b21b6; }
+
+    /* ── Question text ── */
+    .ak-q-text {
+      font-size:     13.5px;
+      color:         var(--muted);
+      margin-bottom: 14px;
+      line-height:   1.7;
+    }
+    .ak-q-text code {
+      background:  var(--code-bg);
+      border:      1px solid var(--border);
+      padding:     1px 5px;
+      border-radius:3px;
+      font-family: var(--mono);
+      font-size:   12.5px;
+    }
+
+    /* ── HTML snippet ── */
+    .ak-snippet-label {
+      font-size:     10.5px;
+      font-weight:   700;
+      text-transform:uppercase;
+      letter-spacing:.07em;
+      color:         var(--muted);
+      margin-bottom: 5px;
+    }
+    .ak-snippet {
+      background:    var(--code-bg);
+      border:        1px solid var(--border);
+      border-radius: 5px;
+      padding:       10px 14px;
+      font-family:   var(--mono);
+      font-size:     12px;
+      line-height:   1.7;
+      color:         #2d3a52;
+      white-space:   pre;
+      overflow-x:    auto;
+      margin-bottom: 14px;
+    }
+
+    /* ── Answer area ── */
+    .ak-answer-block {
+      background:    var(--correct-bg);
+      border:        1px solid #86efac;
+      border-left:   4px solid var(--correct);
+      border-radius: 6px;
+      padding:       12px 16px;
+    }
+
+    .ak-answer-label {
+      font-size:   11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: .07em;
+      color:       var(--correct);
+      margin-bottom: 8px;
+      display:     flex;
+      align-items: center;
+      gap:         6px;
+    }
+
+    /* Write question answers */
+    .ak-answer-list { list-style: none; padding: 0; }
+    .ak-answer-list li {
+      margin-bottom: 5px;
+      display:       flex;
+      align-items:   flex-start;
+      gap:           8px;
+    }
+    .ak-ans-num {
+      font-size:   11px;
+      font-weight: 700;
+      color:       var(--correct);
+      min-width:   20px;
+      padding-top: 2px;
+    }
+    .ak-ans-code {
+      font-family:   var(--mono);
+      font-size:     12.5px;
+      background:    rgba(255,255,255,.7);
+      border:        1px solid #86efac;
+      border-radius: 4px;
+      padding:       2px 8px;
+      color:         #14532d;
+      word-break:    break-all;
+      flex:          1;
+    }
+    .ak-primary-badge {
+      font-size:     10px;
+      background:    var(--correct);
+      color:         #fff;
+      border-radius: 3px;
+      padding:       1px 5px;
+      white-space:   nowrap;
+      align-self:    center;
+    }
+
+    /* MCQ answer */
+    .ak-mcq-answer {
+      display:     flex;
+      align-items: flex-start;
+      gap:         10px;
+    }
+    .ak-mcq-letter {
+      font-size:     22px;
+      font-weight:   800;
+      color:         var(--correct);
+      line-height:   1;
+      min-width:     24px;
+    }
+    .ak-mcq-text {
+      font-family: var(--mono);
+      font-size:   13px;
+      color:       #14532d;
+      line-height: 1.6;
+    }
+
+    /* ── Explanation ── */
+    .ak-explanation {
+      margin-top:  12px;
+      background:  #f8fafc;
+      border:      1px solid var(--border);
+      border-left: 3px solid var(--accent);
+      border-radius:4px;
+      padding:     10px 14px;
+      font-size:   13px;
+      color:       #374151;
+      line-height: 1.7;
+    }
+    .ak-explanation strong {
+      display:       block;
+      font-size:     11px;
+      text-transform:uppercase;
+      letter-spacing:.06em;
+      color:         var(--accent);
+      margin-bottom: 4px;
+    }
+
+    /* ── Summary table ── */
+    .summary-section {
+      margin-top: 36px;
+    }
+    .summary-title {
+      font-size:     17px;
+      font-weight:   700;
+      color:         var(--primary);
+      margin-bottom: 14px;
+      padding-bottom:8px;
+      border-bottom: 2px solid var(--border);
+    }
+    .summary-table {
+      width:           100%;
+      border-collapse: collapse;
+      font-size:       13px;
+    }
+    .summary-table th {
+      background:  var(--primary);
+      color:       #fff;
+      padding:     9px 12px;
+      text-align:  left;
+      font-weight: 600;
+    }
+    .summary-table td {
+      padding:      8px 12px;
+      border-bottom: 1px solid var(--border);
+      vertical-align: top;
+    }
+    .summary-table tr:nth-child(even) td { background: var(--bg); }
+
+    .type-badge {
+      font-size:     11px;
+      padding:       2px 8px;
+      border-radius: 20px;
+      font-weight:   600;
+    }
+    .tb-write { background: #dbeafe; color: #1e40af; }
+    .tb-mcq   { background: #ede9fe; color: #5b21b6; }
+
+    .summary-table code {
+      font-family: var(--mono);
+      font-size:   12px;
+      background:  var(--code-bg);
+      padding:     1px 4px;
+      border-radius:3px;
+    }
+
+    /* ── Footer ── */
+    .ak-footer {
+      margin-top:  40px;
+      padding-top: 16px;
+      border-top:  1px dashed var(--border);
+      font-size:   12px;
+      color:       var(--muted);
+      text-align:  center;
+    }
+
+    /* ── Print styles ── */
+    @media print {
+      .trainer-warning { display: none; }
+      .ak-header       { background: #1e6b6b !important; -webkit-print-color-adjust: exact; }
+      body             { font-size: 12px; }
+      .ak-card         { break-inside: avoid; margin-bottom: 10px; }
+      .section-title   { background: #1e6b6b !important; -webkit-print-color-adjust: exact; }
+    }
+
+    @media (max-width: 540px) {
+      .ak-card { padding: 14px; }
+      .ak-snippet { font-size: 11px; }
+    }
+  </style>
+</head>
+<body>
+  <!-- ════════════════════════════════════════════════════════════════════
+       PASSWORD LOCK  –  correct password: xpath@training
+       Change HASH constant below if you ever change the password.
+       Generate a new SHA-256 hash at: https://emn178.github.io/online-tools/sha256.html
+       ════════════════════════════════════════════════════════════════════ -->
+  <div id="lockScreen" style="
+    position:fixed;inset:0;z-index:9999;
+    background:linear-gradient(135deg,#1e3a5f 0%,#2c5f9e 100%);
+    display:flex;align-items:center;justify-content:center;
+    font-family:'Segoe UI',Arial,sans-serif;">
+    <div style="
+      background:#fff;border-radius:14px;padding:44px 40px 36px;
+      width:360px;max-width:92vw;
+      box-shadow:0 20px 60px rgba(0,0,0,.45);
+      text-align:center;">
+      <div style="font-size:48px;margin-bottom:12px;">🔒</div>
+      <h2 style="color:#1e3a5f;font-size:20px;margin-bottom:6px;">Trainer Access Only</h2>
+      <p style="color:#5a6175;font-size:13px;margin-bottom:24px;">
+        This answer key is password protected.<br>Enter the trainer password to continue.
+      </p>
+      <input id="pwInput" type="password"
+        placeholder="Enter password"
+        style="
+          width:100%;padding:11px 14px;border:1.5px solid #dde1ea;
+          border-radius:7px;font-size:14px;outline:none;
+          color:#1e2330;margin-bottom:10px;box-sizing:border-box;
+          transition:border-color .2s;"
+        onkeydown="if(event.key==='Enter') checkPwd()"
+        onfocus="this.style.borderColor='#2c5f9e'"
+        onblur="this.style.borderColor='#dde1ea'" />
+      <div id="pwError" style="
+        color:#dc2626;font-size:12px;margin-bottom:10px;
+        min-height:16px;font-weight:600;"></div>
+      <button onclick="checkPwd()" style="
+        width:100%;padding:11px;background:#2c5f9e;color:#fff;
+        border:none;border-radius:7px;font-size:14px;font-weight:700;
+        cursor:pointer;transition:background .2s;"
+        onmouseover="this.style.background='#1e4275'"
+        onmouseout="this.style.background='#2c5f9e'">
+        Unlock Answer Key
+      </button>
+      <p style="margin-top:18px;font-size:11px;color:#9ca3af;">
+        Unauthorised access is prohibited.
+      </p>
+    </div>
+  </div>
+
+  <!-- Main content hidden until password verified -->
+  <div id="mainContent" style="display:none;">
+
+
+  <!-- ════════════════════════════════════════════════════════════════════
+       HEADER
+  ════════════════════════════════════════════════════════════════════ -->
+  <header class="ak-header">
+    <div class="page-wrap">
+      <div class="badge-row">
+        <span class="badge badge-paper">QA Automation Training</span>
+        <span class="badge badge-trainer">🔒 Trainer Use Only</span>
+        <span class="badge badge-paper">Advanced — Paper 2</span>
+      </div>
+      <h1>Answer Key — XPath &amp; Web DOM Advanced Assessment</h1>
+      <p>All 25 questions · Correct answers · Accepted alternatives · Explanations</p>
+    </div>
+  </header>
+
+  <main class="page-wrap">
+
+    <!-- ─── Trainer Warning ────────────────────────────────────────────── -->
+    <div class="trainer-warning">
+      <strong>⚠ Trainer-Only Document</strong>
+      This file contains all correct answers and explanations for Paper 2.
+      Do <strong>not</strong> distribute this file to candidates.
+      Share only <code>index.html</code>, <code>style.css</code>, and <code>script.js</code> with candidates.
+    </div>
+
+    <!-- ════════════════════════════════════════════════════════════════
+         SECTION 1 — ADVANCED XPATH FUNCTIONS  (Q1–Q6)
+    ════════════════════════════════════════════════════════════════ -->
+    <div class="section-title">
+      <span class="sec-num">Section 1</span>
+      Advanced XPath Functions
+      <span style="margin-left:auto;font-weight:400;font-size:11px;opacity:.8">Q1 – Q6</span>
+    </div>
+
+    <!-- Q1 -->
+    <div class="ak-card">
+      <div class="ak-card-header">
+        <span class="ak-qnum">Q1</span>
+        <span class="ak-topic">normalize-space() Function</span>
+        <span class="ak-type-badge ak-type-write">Write XPath</span>
+      </div>
+      <div class="ak-snippet-label">HTML Snippet</div>
+      <pre class="ak-snippet">&lt;div class="checkout-panel"&gt;
+  &lt;button id="placeOrder"&gt;
+    Place   Order
+  &lt;/button&gt;
+  &lt;button id="cancelOrder"&gt;Cancel&lt;/button&gt;
+&lt;/div&gt;</pre>
+      <p class="ak-q-text">Write an XPath using <code>normalize-space()</code> to reliably locate the <strong>Place Order</strong> button.</p>
+      <div class="ak-answer-block">
+        <div class="ak-answer-label">✔ Accepted Answers</div>
+        <ul class="ak-answer-list">
+          <li>
+            <span class="ak-ans-num">1.</span>
+            <code class="ak-ans-code">//button[normalize-space()='Place Order']</code>
+            <span class="ak-primary-badge">Primary</span>
+          </li>
+          <li>
+            <span class="ak-ans-num">2.</span>
+            <code class="ak-ans-code">//button[normalize-space(text())='Place Order']</code>
+          </li>
+          <li>
+            <span class="ak-ans-num">3.</span>
+            <code class="ak-ans-code">//button[normalize-space(.)='Place Order']</code>
+          </li>
+          <li>
+            <span class="ak-ans-num">4.</span>
+            <code class="ak-ans-code">//div[@class='checkout-panel']/button[normalize-space()='Place Order']</code>
+          </li>
+        </ul>
+      </div>
+      <div class="ak-explanation">
+        <strong>💡 Concept</strong>
+        <code>normalize-space()</code> strips leading/trailing whitespace and collapses all internal whitespace sequences into a single space. It is essential when button/label text contains newlines or multiple spaces from template rendering.
+      </div>
+    </div>
+
+    <!-- Q2 -->
+    <div class="ak-card">
+      <div class="ak-card-header">
+        <span class="ak-qnum">Q2</span>
+        <span class="ak-topic">not() Predicate</span>
+        <span class="ak-type-badge ak-type-mcq">Multiple Choice</span>
+      </div>
+      <div class="ak-snippet-label">HTML Snippet</div>
+      <pre class="ak-snippet">&lt;form id="profileForm"&gt;
+  &lt;input type="text"  id="fname"  placeholder="First Name"&gt;
+  &lt;input type="text"  id="lname"  placeholder="Last Name"  disabled&gt;
+  &lt;input type="email" id="email"  placeholder="Email"&gt;
+  &lt;input type="tel"   id="phone"  placeholder="Phone"      disabled&gt;
+&lt;/form&gt;</pre>
+      <p class="ak-q-text">Which XPath selects only the input fields that are <strong>not disabled</strong>?</p>
+      <div class="ak-answer-block">
+        <div class="ak-answer-label">✔ Correct Answer</div>
+        <div class="ak-mcq-answer">
+          <span class="ak-mcq-letter">B</span>
+          <code class="ak-mcq-text">//input[not(@disabled)]</code>
+        </div>
+      </div>
+      <div class="ak-explanation">
+        <strong>💡 Concept</strong>
+        <code>not(@disabled)</code> checks that the <code>disabled</code> attribute is absent. The presence of the attribute alone (even with no value or value="disabled") means the element is disabled. Using <code>@disabled=false</code> is incorrect because XPath compares it as a string and the attribute value is not the string "false".
+      </div>
+    </div>
+
+    <!-- Q3 -->
+    <div class="ak-card">
+      <div class="ak-card-header">
+        <span class="ak-qnum">Q3</span>
+        <span class="ak-topic">XPath Union Operator ( | )</span>
+        <span class="ak-type-badge ak-type-write">Write XPath</span>
+      </div>
+      <div class="ak-snippet-label">HTML Snippet</div>
+      <pre class="ak-snippet">&lt;div class="modal-footer"&gt;
+  &lt;button type="submit"  class="btn-primary"&gt;Confirm&lt;/button&gt;
+  &lt;button type="reset"   class="btn-secondary"&gt;Reset&lt;/button&gt;
+  &lt;a href="/help"        class="btn-link"&gt;Help&lt;/a&gt;
+&lt;/div&gt;</pre>
+      <p class="ak-q-text">Write a single XPath using <code>|</code> to select both the <strong>Confirm button</strong> and the <strong>Help link</strong>.</p>
+      <div class="ak-answer-block">
+        <div class="ak-answer-label">✔ Accepted Answers</div>
+        <ul class="ak-answer-list">
+          <li>
+            <span class="ak-ans-num">1.</span>
+            <code class="ak-ans-code">//button[@type='submit'] | //a[@href='/help']</code>
+            <span class="ak-primary-badge">Primary</span>
+          </li>
+          <li>
+            <span class="ak-ans-num">2.</span>
+            <code class="ak-ans-code">//button[text()='Confirm'] | //a[text()='Help']</code>
+          </li>
+          <li>
+            <span class="ak-ans-num">3.</span>
+            <code class="ak-ans-code">//button[@class='btn-primary'] | //a[@class='btn-link']</code>
+          </li>
+          <li>
+            <span class="ak-ans-num">4.</span>
+            <code class="ak-ans-code">//button[normalize-space()='Confirm'] | //a[normalize-space()='Help']</code>
+          </li>
+        </ul>
+      </div>
+      <div class="ak-explanation">
+        <strong>💡 Concept</strong>
+        The <code>|</code> union operator merges two node-sets into one. It is the only set union operator in XPath 1.0. It is useful to reduce driver calls — instead of two findElements calls you get both in one. Order of results follows document order.
+      </div>
+    </div>
+
+    <!-- Q4 -->
+    <div class="ak-card">
+      <div class="ak-card-header">
+        <span class="ak-qnum">Q4</span>
+        <span class="ak-topic">translate() — Case-Insensitive Search</span>
+        <span class="ak-type-badge ak-type-mcq">Multiple Choice</span>
+      </div>
+      <div class="ak-snippet-label">HTML Snippet</div>
+      <pre class="ak-snippet">&lt;nav class="main-menu"&gt;
+  &lt;a href="/dashboard"&gt;DASHBOARD&lt;/a&gt;
+  &lt;a href="/reports"&gt;Reports&lt;/a&gt;
+  &lt;a href="/settings"&gt;settings&lt;/a&gt;
+&lt;/nav&gt;</pre>
+      <p class="ak-q-text">Which XPath uses <code>translate()</code> to find the Dashboard link regardless of text case?</p>
+      <div class="ak-answer-block">
+        <div class="ak-answer-label">✔ Correct Answer</div>
+        <div class="ak-mcq-answer">
+          <span class="ak-mcq-letter">C</span>
+          <code class="ak-mcq-text">//a[translate(text(),'ABCDEFGHIJKLMNOPQRSTUVWXYZ','abcdefghijklmnopqrstuvwxyz')='dashboard']</code>
+        </div>
+      </div>
+      <div class="ak-explanation">
+        <strong>💡 Concept</strong>
+        <code>translate(string, from-chars, to-chars)</code> replaces characters one-for-one. Using it to convert text to lowercase allows case-insensitive matching. Note: <code>lower-case()</code> is XPath 2.0 and is not universally supported in Selenium drivers.
+      </div>
+    </div>
+
+    <!-- Q5 -->
+    <div class="ak-card">
+      <div class="ak-card-header">
+        <span class="ak-qnum">Q5</span>
+        <span class="ak-topic">count() Function</span>
+        <span class="ak-type-badge ak-type-write">Write XPath</span>
+      </div>
+      <div class="ak-snippet-label">HTML Snippet</div>
+      <pre class="ak-snippet">&lt;table id="ordersTable"&gt;
+  &lt;thead&gt;&lt;tr&gt;&lt;th&gt;Order ID&lt;/th&gt;...&lt;/tr&gt;&lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;...&lt;/tr&gt;
+    &lt;tr&gt;...&lt;/tr&gt;
+    &lt;tr&gt;...&lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;</pre>
+      <p class="ak-q-text">Write an XPath using <code>count()</code> to return the total number of data rows (tbody only).</p>
+      <div class="ak-answer-block">
+        <div class="ak-answer-label">✔ Accepted Answers</div>
+        <ul class="ak-answer-list">
+          <li>
+            <span class="ak-ans-num">1.</span>
+            <code class="ak-ans-code">count(//table[@id='ordersTable']/tbody/tr)</code>
+            <span class="ak-primary-badge">Primary</span>
+          </li>
+          <li>
+            <span class="ak-ans-num">2.</span>
+            <code class="ak-ans-code">count(//table[@id='ordersTable']//tbody/tr)</code>
+          </li>
+          <li>
+            <span class="ak-ans-num">3.</span>
+            <code class="ak-ans-code">count(//tbody/tr)</code>
+          </li>
+          <li>
+            <span class="ak-ans-num">4.</span>
+            <code class="ak-ans-code">count(//table/tbody/tr)</code>
+          </li>
+        </ul>
+      </div>
+      <div class="ak-explanation">
+        <strong>💡 Concept</strong>
+        <code>count(node-set)</code> returns the number of nodes. Using <code>tbody/tr</code> precisely targets data rows only. In Selenium: <code>driver.findElements(By.xpath("//tbody/tr")).size()</code> is the equivalent programmatic check.
+      </div>
+    </div>
+
+    <!-- Q6 -->
+    <div class="ak-card">
+      <div class="ak-card-header">
+        <span class="ak-qnum">Q6</span>
+        <span class="ak-topic">string-length() Function</span>
+        <span class="ak-type-badge ak-type-mcq">Multiple Choice</span>
+      </div>
+      <div class="ak-snippet-label">HTML Snippet</div>
+      <pre class="ak-snippet">&lt;ul id="productList"&gt;
+  &lt;li data-sku="AB"&gt;Short SKU&lt;/li&gt;
+  &lt;li data-sku="XYZABC123"&gt;Long SKU&lt;/li&gt;
+  &lt;li data-sku="MN"&gt;Short SKU&lt;/li&gt;
+&lt;/ul&gt;</pre>
+      <p class="ak-q-text">Which XPath selects items whose <code>data-sku</code> has a <strong>length &gt; 4 characters</strong>?</p>
+      <div class="ak-answer-block">
+        <div class="ak-answer-label">✔ Correct Answer</div>
+        <div class="ak-mcq-answer">
+          <span class="ak-mcq-letter">C</span>
+          <code class="ak-mcq-text">//li[string-length(@data-sku) > 4]</code>
+        </div>
+      </div>
+      <div class="ak-explanation">
+        <strong>💡 Concept</strong>
+        <code>string-length(string)</code> returns the number of characters. Works on attribute values, text nodes, or concatenated strings. Useful for validation assertions or filtering elements with long/short identifiers.
+      </div>
+    </div>
+
+
+    <!-- ════════════════════════════════════════════════════════════════
+         SECTION 2 — MODERN HTML ATTRIBUTES  (Q7–Q13)
+    ════════════════════════════════════════════════════════════════ -->
+    <div class="section-title">
+      <span class="sec-num">Section 2</span>
+      Modern HTML Attributes (data-* &amp; ARIA)
+      <span style="margin-left:auto;font-weight:400;font-size:11px;opacity:.8">Q7 – Q13</span>
+    </div>
+
+    <!-- Q7 -->
+    <div class="ak-card">
+      <div class="ak-card-header">
+        <span class="ak-qnum">Q7</span>
+        <span class="ak-topic">data-testid — Test Automation Attribute</span>
+        <span class="ak-type-badge ak-type-write">Write XPath</span>
+      </div>
+      <div class="ak-snippet-label">HTML Snippet</div>
+      <pre class="ak-snippet">&lt;div class="login-container"&gt;
+  &lt;input data-testid="email-input"    type="email"&gt;
+  &lt;input data-testid="password-input" type="password"&gt;
+  &lt;button data-testid="login-submit"  type="submit"&gt;Sign In&lt;/button&gt;
+&lt;/div&gt;</pre>
+      <p class="ak-q-text">Write an XPath to locate the <strong>Sign In button</strong> using its <code>data-testid</code> value.</p>
+      <div class="ak-answer-block">
+        <div class="ak-answer-label">✔ Accepted Answers</div>
+        <ul class="ak-answer-list">
+          <li><span class="ak-ans-num">1.</span><code class="ak-ans-code">//button[@data-testid='login-submit']</code><span class="ak-primary-badge">Primary</span></li>
+          <li><span class="ak-ans-num">2.</span><code class="ak-ans-code">//*[@data-testid='login-submit']</code></li>
+          <li><span class="ak-ans-num">3.</span><code class="ak-ans-code">//button[@data-testid='login-submit'][@type='submit']</code></li>
+        </ul>
+      </div>
+      <div class="ak-explanation">
+        <strong>💡 Concept</strong>
+        <code>data-testid</code> is added by developers exclusively for test automation. It is the most stable locator — it does not change with styling, layout, text content, or ID regeneration. This is the recommended primary locator strategy in modern teams.
+      </div>
+    </div>
+
+    <!-- Q8 -->
+    <div class="ak-card">
+      <div class="ak-card-header">
+        <span class="ak-qnum">Q8</span>
+        <span class="ak-topic">data-cy — Cypress-Style Test Attribute</span>
+        <span class="ak-type-badge ak-type-mcq">Multiple Choice</span>
+      </div>
+      <div class="ak-snippet-label">HTML Snippet</div>
+      <pre class="ak-snippet">&lt;form data-cy="signup-form"&gt;
+  &lt;input data-cy="name-field"  type="text"&gt;
+  &lt;input data-cy="email-field" type="email"&gt;
+  &lt;select data-cy="country-select"&gt;...&lt;/select&gt;
+  &lt;button data-cy="signup-submit"&gt;Create Account&lt;/button&gt;
+&lt;/form&gt;</pre>
+      <p class="ak-q-text">Which XPath locates the <strong>country dropdown</strong> using <code>data-cy</code>?</p>
+      <div class="ak-answer-block">
+        <div class="ak-answer-label">✔ Correct Answer</div>
+        <div class="ak-mcq-answer">
+          <span class="ak-mcq-letter">B</span>
+          <code class="ak-mcq-text">//select[@data-cy='country-select']</code>
+        </div>
+      </div>
+      <div class="ak-explanation">
+        <strong>💡 Concept</strong>
+        Custom <code>data-*</code> attributes use the <code>@</code> prefix like standard attributes. Common test attribute names: <code>data-testid</code> (React Testing Library), <code>data-cy</code> (Cypress), <code>data-qa</code>, <code>data-test</code>. All are accessed with <code>[@data-xxx='value']</code>.
+      </div>
+    </div>
+
+    <!-- Q9 -->
+    <div class="ak-card">
+      <div class="ak-card-header">
+        <span class="ak-qnum">Q9</span>
+        <span class="ak-topic">ARIA — aria-label Attribute</span>
+        <span class="ak-type-badge ak-type-write">Write XPath</span>
+      </div>
+      <div class="ak-snippet-label">HTML Snippet</div>
+      <pre class="ak-snippet">&lt;header class="app-header"&gt;
+  &lt;button aria-label="Open navigation menu"&gt;☰&lt;/button&gt;
+  &lt;button aria-label="Search"&gt;&lt;svg/&gt;&lt;/button&gt;
+  &lt;button aria-label="Close dialog"&gt;✕&lt;/button&gt;
+&lt;/header&gt;</pre>
+      <p class="ak-q-text">Write an XPath to locate the <strong>Close dialog button</strong> using <code>aria-label</code>.</p>
+      <div class="ak-answer-block">
+        <div class="ak-answer-label">✔ Accepted Answers</div>
+        <ul class="ak-answer-list">
+          <li><span class="ak-ans-num">1.</span><code class="ak-ans-code">//button[@aria-label='Close dialog']</code><span class="ak-primary-badge">Primary</span></li>
+          <li><span class="ak-ans-num">2.</span><code class="ak-ans-code">//header//button[@aria-label='Close dialog']</code></li>
+          <li><span class="ak-ans-num">3.</span><code class="ak-ans-code">//*[@aria-label='Close dialog']</code></li>
+        </ul>
+      </div>
+      <div class="ak-explanation">
+        <strong>💡 Concept</strong>
+        <code>aria-label</code> provides an accessible name for elements with no visible text (icon buttons, close buttons, hamburger menus). It is a reliable locator for icon-only controls and is preferred over fragile XPath based on icon characters or SVG content.
+      </div>
+    </div>
+
+    <!-- Q10 -->
+    <div class="ak-card">
+      <div class="ak-card-header">
+        <span class="ak-qnum">Q10</span>
+        <span class="ak-topic">ARIA — aria-placeholder Attribute</span>
+        <span class="ak-type-badge ak-type-mcq">Multiple Choice</span>
+      </div>
+      <div class="ak-snippet-label">HTML Snippet</div>
+      <pre class="ak-snippet">&lt;div role="textbox"
+     aria-placeholder="Search for products..."
+     aria-label="Product search"
+     contenteditable="true"
+     id="searchBox"&gt;
+&lt;/div&gt;</pre>
+      <p class="ak-q-text">Which XPath locates this custom search box using <code>aria-placeholder</code>?</p>
+      <div class="ak-answer-block">
+        <div class="ak-answer-label">✔ Correct Answer</div>
+        <div class="ak-mcq-answer">
+          <span class="ak-mcq-letter">B</span>
+          <code class="ak-mcq-text">//div[@aria-placeholder='Search for products...']</code>
+        </div>
+      </div>
+      <div class="ak-explanation">
+        <strong>💡 Concept</strong>
+        Custom components built with <code>div</code>/<code>span</code> use ARIA attributes instead of native HTML attributes. <code>aria-placeholder</code> is the ARIA equivalent of the <code>placeholder</code> attribute. Always check if a component is native HTML or custom-built before choosing your locator.
+      </div>
+    </div>
+
+    <!-- Q11 -->
+    <div class="ak-card">
+      <div class="ak-card-header">
+        <span class="ak-qnum">Q11</span>
+        <span class="ak-topic">ARIA — aria-expanded (Accordion)</span>
+        <span class="ak-type-badge ak-type-write">Write XPath</span>
+      </div>
+      <div class="ak-snippet-label">HTML Snippet</div>
+      <pre class="ak-snippet">&lt;div class="accordion"&gt;
+  &lt;button aria-expanded="true"  aria-controls="panel1"&gt;Billing Details&lt;/button&gt;
+  &lt;button aria-expanded="false" aria-controls="panel2"&gt;Shipping Address&lt;/button&gt;
+  &lt;button aria-expanded="false" aria-controls="panel3"&gt;Payment Method&lt;/button&gt;
+&lt;/div&gt;</pre>
+      <p class="ak-q-text">Write an XPath to select the accordion header that is currently <strong>expanded</strong>.</p>
+      <div class="ak-answer-block">
+        <div class="ak-answer-label">✔ Accepted Answers</div>
+        <ul class="ak-answer-list">
+          <li><span class="ak-ans-num">1.</span><code class="ak-ans-code">//button[@aria-expanded='true']</code><span class="ak-primary-badge">Primary</span></li>
+          <li><span class="ak-ans-num">2.</span><code class="ak-ans-code">//button[@class='acc-header'][@aria-expanded='true']</code></li>
+          <li><span class="ak-ans-num">3.</span><code class="ak-ans-code">//button[contains(@class,'acc-header') and @aria-expanded='true']</code></li>
+        </ul>
+      </div>
+      <div class="ak-explanation">
+        <strong>💡 Concept</strong>
+        <code>aria-expanded='true'</code> indicates the controlled section is visible. Use this to assert accordion/dropdown state in tests. Never rely on CSS classes like "active" or "open" — they may differ across frameworks.
+      </div>
+    </div>
+
+    <!-- Q12 -->
+    <div class="ak-card">
+      <div class="ak-card-header">
+        <span class="ak-qnum">Q12</span>
+        <span class="ak-topic">ARIA — aria-selected (Tab Panels)</span>
+        <span class="ak-type-badge ak-type-mcq">Multiple Choice</span>
+      </div>
+      <div class="ak-snippet-label">HTML Snippet</div>
+      <pre class="ak-snippet">&lt;div role="tablist"&gt;
+  &lt;button role="tab" aria-selected="true"  id="tab-summary"&gt;Summary&lt;/button&gt;
+  &lt;button role="tab" aria-selected="false" id="tab-detail"&gt;Detail&lt;/button&gt;
+  &lt;button role="tab" aria-selected="false" id="tab-export"&gt;Export&lt;/button&gt;
+&lt;/div&gt;</pre>
+      <p class="ak-q-text">Which XPath selects the <strong>currently active / selected tab</strong>?</p>
+      <div class="ak-answer-block">
+        <div class="ak-answer-label">✔ Correct Answer</div>
+        <div class="ak-mcq-answer">
+          <span class="ak-mcq-letter">B</span>
+          <code class="ak-mcq-text">//button[@aria-selected='true']</code>
+        </div>
+      </div>
+      <div class="ak-explanation">
+        <strong>💡 Concept</strong>
+        <code>aria-selected='true'</code> marks the active tab. After clicking a tab in a test, assert <code>getAttribute("aria-selected")</code> equals "true" to verify the tab switch was successful.
+      </div>
+    </div>
+
+    <!-- Q13 -->
+    <div class="ak-card">
+      <div class="ak-card-header">
+        <span class="ak-qnum">Q13</span>
+        <span class="ak-topic">ARIA — aria-checked (Custom Checkbox)</span>
+        <span class="ak-type-badge ak-type-write">Write XPath</span>
+      </div>
+      <div class="ak-snippet-label">HTML Snippet</div>
+      <pre class="ak-snippet">&lt;div class="settings-panel"&gt;
+  &lt;div role="checkbox" aria-checked="true"  data-setting="notifications"&gt;Email Notifications&lt;/div&gt;
+  &lt;div role="checkbox" aria-checked="false" data-setting="sms"&gt;SMS Alerts&lt;/div&gt;
+  &lt;div role="checkbox" aria-checked="true"  data-setting="newsletter"&gt;Newsletter&lt;/div&gt;
+&lt;/div&gt;</pre>
+      <p class="ak-q-text">Write an XPath to select all custom checkbox divs that are <strong>currently checked</strong>.</p>
+      <div class="ak-answer-block">
+        <div class="ak-answer-label">✔ Accepted Answers</div>
+        <ul class="ak-answer-list">
+          <li><span class="ak-ans-num">1.</span><code class="ak-ans-code">//*[@role='checkbox'][@aria-checked='true']</code><span class="ak-primary-badge">Primary</span></li>
+          <li><span class="ak-ans-num">2.</span><code class="ak-ans-code">//div[@role='checkbox'][@aria-checked='true']</code></li>
+          <li><span class="ak-ans-num">3.</span><code class="ak-ans-code">//div[@aria-checked='true']</code></li>
+          <li><span class="ak-ans-num">4.</span><code class="ak-ans-code">//*[@aria-checked='true']</code></li>
+        </ul>
+      </div>
+      <div class="ak-explanation">
+        <strong>💡 Concept</strong>
+        Custom checkboxes use <code>role="checkbox"</code> and <code>aria-checked</code>. Never use <code>@checked</code> (only works on native <code>&lt;input type="checkbox"&gt;</code>). Asserting <code>aria-checked='true'</code> is the correct way to verify custom toggle state.
+      </div>
+    </div>
+
+
+    <!-- ════════════════════════════════════════════════════════════════
+         SECTION 3 — SPECIAL INPUT STATES  (Q14–Q17)
+    ════════════════════════════════════════════════════════════════ -->
+    <div class="section-title">
+      <span class="sec-num">Section 3</span>
+      Special Input States
+      <span style="margin-left:auto;font-weight:400;font-size:11px;opacity:.8">Q14 – Q17</span>
+    </div>
+
+    <!-- Q14 -->
+    <div class="ak-card">
+      <div class="ak-card-header">
+        <span class="ak-qnum">Q14</span>
+        <span class="ak-topic">Hidden Input Fields</span>
+        <span class="ak-type-badge ak-type-mcq">Multiple Choice</span>
+      </div>
+      <div class="ak-snippet-label">HTML Snippet</div>
+      <pre class="ak-snippet">&lt;form id="paymentForm"&gt;
+  &lt;input type="hidden" name="csrf_token"   value="x9aK3mZ..."&gt;
+  &lt;input type="hidden" name="session_id"   value="sess_abc123"&gt;
+  &lt;input type="hidden" name="amount_cents" value="4999"&gt;
+  &lt;button type="submit"&gt;Pay $49.99&lt;/button&gt;
+&lt;/form&gt;</pre>
+      <p class="ak-q-text">Which XPath locates the hidden input storing the <strong>CSRF token</strong>?</p>
+      <div class="ak-answer-block">
+        <div class="ak-answer-label">✔ Correct Answer</div>
+        <div class="ak-mcq-answer">
+          <span class="ak-mcq-letter">A</span>
+          <code class="ak-mcq-text">//input[@type='hidden' and @name='csrf_token']</code>
+        </div>
+      </div>
+      <div class="ak-explanation">
+        <strong>💡 Concept</strong>
+        Hidden inputs (<code>type='hidden'</code>) are in the DOM and fully locatable. They carry security tokens, session IDs, and form metadata. Reading hidden field values is critical in security and integration tests.
+      </div>
+    </div>
+
+    <!-- Q15 -->
+    <div class="ak-card">
+      <div class="ak-card-header">
+        <span class="ak-qnum">Q15</span>
+        <span class="ak-topic">Disabled Elements</span>
+        <span class="ak-type-badge ak-type-write">Write XPath</span>
+      </div>
+      <div class="ak-snippet-label">HTML Snippet</div>
+      <pre class="ak-snippet">&lt;div class="wizard-nav"&gt;
+  &lt;button id="btnBack"   type="button" disabled&gt;← Back&lt;/button&gt;
+  &lt;button id="btnNext"   type="button"&gt;Next →&lt;/button&gt;
+  &lt;button id="btnSubmit" type="submit" disabled&gt;Submit&lt;/button&gt;
+&lt;/div&gt;</pre>
+      <p class="ak-q-text">Write an XPath to select <strong>all disabled buttons</strong> in this wizard navigation bar.</p>
+      <div class="ak-answer-block">
+        <div class="ak-answer-label">✔ Accepted Answers</div>
+        <ul class="ak-answer-list">
+          <li><span class="ak-ans-num">1.</span><code class="ak-ans-code">//button[@disabled]</code><span class="ak-primary-badge">Primary</span></li>
+          <li><span class="ak-ans-num">2.</span><code class="ak-ans-code">//div[@class='wizard-nav']/button[@disabled]</code></li>
+          <li><span class="ak-ans-num">3.</span><code class="ak-ans-code">//button[@disabled='disabled']</code></li>
+          <li><span class="ak-ans-num">4.</span><code class="ak-ans-code">//div//button[@disabled]</code></li>
+        </ul>
+      </div>
+      <div class="ak-explanation">
+        <strong>💡 Concept</strong>
+        <code>@disabled</code> checks attribute presence (boolean attribute). You can assert a button is disabled in a test by verifying <code>getAttribute("disabled") != null</code> or using <code>isEnabled() == false</code> in Selenium.
+      </div>
+    </div>
+
+    <!-- Q16 -->
+    <div class="ak-card">
+      <div class="ak-card-header">
+        <span class="ak-qnum">Q16</span>
+        <span class="ak-topic">Read-Only Input Fields</span>
+        <span class="ak-type-badge ak-type-mcq">Multiple Choice</span>
+      </div>
+      <div class="ak-snippet-label">HTML Snippet</div>
+      <pre class="ak-snippet">&lt;form class="user-profile"&gt;
+  &lt;input type="text"  id="username"   value="john_doe"  readonly&gt;
+  &lt;input type="email" id="email"      value="john@..."  readonly&gt;
+  &lt;input type="text"  id="department" value="Engineering"&gt;
+  &lt;input type="tel"   id="phone"      value="+1-555-0100"&gt;
+&lt;/form&gt;</pre>
+      <p class="ak-q-text">Which XPath selects only the <strong>read-only</strong> input fields?</p>
+      <div class="ak-answer-block">
+        <div class="ak-answer-label">✔ Correct Answer</div>
+        <div class="ak-mcq-answer">
+          <span class="ak-mcq-letter">C</span>
+          <code class="ak-mcq-text">//input[@readonly]</code>
+        </div>
+      </div>
+      <div class="ak-explanation">
+        <strong>💡 Concept</strong>
+        <code>readonly</code> is a boolean HTML attribute — check its presence with <code>@readonly</code>. Read-only fields are visible, selectable, and copyable but cannot be edited by the user. In Selenium, <code>isEnabled()</code> returns <code>true</code> for readonly fields (unlike disabled), so attribute checking is essential.
+      </div>
+    </div>
+
+    <!-- Q17 -->
+    <div class="ak-card">
+      <div class="ak-card-header">
+        <span class="ak-qnum">Q17</span>
+        <span class="ak-topic">File Upload Input</span>
+        <span class="ak-type-badge ak-type-write">Write XPath</span>
+      </div>
+      <div class="ak-snippet-label">HTML Snippet</div>
+      <pre class="ak-snippet">&lt;div class="upload-section"&gt;
+  &lt;input type="file" id="avatarUpload"  name="avatar"  accept="image/png,image/jpeg" data-testid="avatar-file-input"&gt;
+  &lt;input type="file" id="resumeUpload"  name="resume"  accept=".pdf,.doc"            data-testid="resume-file-input"&gt;
+&lt;/div&gt;</pre>
+      <p class="ak-q-text">Write an XPath to locate the <strong>resume file upload</strong> input using its <code>name</code> attribute.</p>
+      <div class="ak-answer-block">
+        <div class="ak-answer-label">✔ Accepted Answers</div>
+        <ul class="ak-answer-list">
+          <li><span class="ak-ans-num">1.</span><code class="ak-ans-code">//input[@type='file'][@name='resume']</code><span class="ak-primary-badge">Primary</span></li>
+          <li><span class="ak-ans-num">2.</span><code class="ak-ans-code">//input[@name='resume']</code></li>
+          <li><span class="ak-ans-num">3.</span><code class="ak-ans-code">//input[@type='file' and @name='resume']</code></li>
+          <li><span class="ak-ans-num">4.</span><code class="ak-ans-code">//input[@data-testid='resume-file-input']</code></li>
+        </ul>
+      </div>
+      <div class="ak-explanation">
+        <strong>💡 Concept</strong>
+        File inputs are located like any other input. In Selenium, use <code>sendKeys("/absolute/path/to/file.pdf")</code> to set the file — do NOT click the OS file picker dialog. The path must be absolute on the machine running the test.
+      </div>
+    </div>
+
+
+    <!-- ════════════════════════════════════════════════════════════════
+         SECTION 4 — COMPLEX DOM STRUCTURES  (Q18–Q21)
+    ════════════════════════════════════════════════════════════════ -->
+    <div class="section-title">
+      <span class="sec-num">Section 4</span>
+      Complex DOM Structures
+      <span style="margin-left:auto;font-weight:400;font-size:11px;opacity:.8">Q18 – Q21</span>
+    </div>
+
+    <!-- Q18 -->
+    <div class="ak-card">
+      <div class="ak-card-header">
+        <span class="ak-qnum">Q18</span>
+        <span class="ak-topic">Select Dropdown — Option by Value</span>
+        <span class="ak-type-badge ak-type-mcq">Multiple Choice</span>
+      </div>
+      <div class="ak-snippet-label">HTML Snippet</div>
+      <pre class="ak-snippet">&lt;select id="roleSelect" name="role"&gt;
+  &lt;option value=""&gt;-- Select Role --&lt;/option&gt;
+  &lt;option value="viewer"&gt;Viewer&lt;/option&gt;
+  &lt;option value="editor"&gt;Editor&lt;/option&gt;
+  &lt;option value="admin"&gt;Administrator&lt;/option&gt;
+  &lt;option value="owner"&gt;Owner&lt;/option&gt;
+&lt;/select&gt;</pre>
+      <p class="ak-q-text">Which XPath locates the <strong>Administrator option</strong>?</p>
+      <div class="ak-answer-block">
+        <div class="ak-answer-label">✔ Correct Answer</div>
+        <div class="ak-mcq-answer">
+          <span class="ak-mcq-letter">D</span>
+          <code class="ak-mcq-text">All of the above are valid</code>
+        </div>
+      </div>
+      <div class="ak-explanation">
+        <strong>💡 Concept</strong>
+        Options are locatable by text or value. In Selenium, prefer the <code>Select</code> class: <code>new Select(el).selectByValue("admin")</code> or <code>.selectByVisibleText("Administrator")</code>. Directly clicking an option element via XPath also works but the Select class is cleaner.
+      </div>
+    </div>
+
+    <!-- Q19 -->
+    <div class="ak-card">
+      <div class="ak-card-header">
+        <span class="ak-qnum">Q19</span>
+        <span class="ak-topic">Table — Select Cell by Column Header Name</span>
+        <span class="ak-type-badge ak-type-write">Write XPath</span>
+      </div>
+      <div class="ak-snippet-label">HTML Snippet</div>
+      <pre class="ak-snippet">&lt;table id="inventoryTable"&gt;
+  &lt;thead&gt;&lt;tr&gt;&lt;th&gt;Item&lt;/th&gt;&lt;th&gt;Category&lt;/th&gt;&lt;th&gt;Stock&lt;/th&gt;&lt;th&gt;Price&lt;/th&gt;&lt;/tr&gt;&lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;&lt;td&gt;Wireless Mouse&lt;/td&gt;&lt;td&gt;Electronics&lt;/td&gt;&lt;td&gt;142&lt;/td&gt;&lt;td&gt;$29.99&lt;/td&gt;&lt;/tr&gt;
+    &lt;tr&gt;&lt;td&gt;USB-C Hub&lt;/td&gt;    &lt;td&gt;Electronics&lt;/td&gt;&lt;td&gt;57&lt;/td&gt; &lt;td&gt;$49.99&lt;/td&gt;&lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;</pre>
+      <p class="ak-q-text">Write an XPath to select the <strong>Price cell</strong> from the row where the Item is <em>USB-C Hub</em>.</p>
+      <div class="ak-answer-block">
+        <div class="ak-answer-label">✔ Accepted Answers</div>
+        <ul class="ak-answer-list">
+          <li><span class="ak-ans-num">1.</span><code class="ak-ans-code">//tr[td[1][text()='USB-C Hub']]/td[count(//th[text()='Price']/preceding-sibling::th)+1]</code><span class="ak-primary-badge">Dynamic</span></li>
+          <li><span class="ak-ans-num">2.</span><code class="ak-ans-code">//tbody/tr[td[text()='USB-C Hub']]/td[4]</code></li>
+          <li><span class="ak-ans-num">3.</span><code class="ak-ans-code">//tr[td[text()='USB-C Hub']]/td[last()]</code></li>
+        </ul>
+      </div>
+      <div class="ak-explanation">
+        <strong>💡 Concept</strong>
+        The dynamic approach uses <code>count(//th[text()='Price']/preceding-sibling::th)+1</code> to calculate column position from the header name — robust even if columns are reordered. The hardcoded <code>td[4]</code> is fragile. Always prefer dynamic column index in production test suites.
+      </div>
+    </div>
+
+    <!-- Q20 -->
+    <div class="ak-card">
+      <div class="ak-card-header">
+        <span class="ak-qnum">Q20</span>
+        <span class="ak-topic">contenteditable — Rich Text Editor</span>
+        <span class="ak-type-badge ak-type-mcq">Multiple Choice</span>
+      </div>
+      <div class="ak-snippet-label">HTML Snippet</div>
+      <pre class="ak-snippet">&lt;div id="editorBody"
+     role="textbox"
+     contenteditable="true"
+     aria-label="Message body"
+     class="editor-area"&gt;
+&lt;/div&gt;</pre>
+      <p class="ak-q-text">Which is the <strong>most reliable</strong> XPath for this rich text editor?</p>
+      <div class="ak-answer-block">
+        <div class="ak-answer-label">✔ Correct Answer</div>
+        <div class="ak-mcq-answer">
+          <span class="ak-mcq-letter">D</span>
+          <code class="ak-mcq-text">All of the above are valid and reliable</code>
+        </div>
+      </div>
+      <div class="ak-explanation">
+        <strong>💡 Concept</strong>
+        All three work. Locator priority: <code>data-testid</code> > <code>aria-label</code> > <code>id</code> > <code>contenteditable</code>. Using <code>contenteditable='true'</code> alone is risky if multiple editors exist. In Selenium, type into a contenteditable div using <code>sendKeys()</code> or JavaScript <code>element.innerHTML = text</code>.
+      </div>
+    </div>
+
+    <!-- Q21 -->
+    <div class="ak-card">
+      <div class="ak-card-header">
+        <span class="ak-qnum">Q21</span>
+        <span class="ak-topic">SVG Elements — local-name()</span>
+        <span class="ak-type-badge ak-type-write">Write XPath</span>
+      </div>
+      <div class="ak-snippet-label">HTML Snippet</div>
+      <pre class="ak-snippet">&lt;div class="chart-container"&gt;
+  &lt;svg id="barChart" width="400" height="300" role="img" aria-label="Sales Chart"&gt;
+    &lt;g class="bars"&gt;
+      &lt;rect class="bar" x="10" y="50" width="40" height="150"/&gt;
+    &lt;/g&gt;
+  &lt;/svg&gt;
+&lt;/div&gt;</pre>
+      <p class="ak-q-text">Write an XPath using <code>local-name()</code> to locate the SVG element by id <code>barChart</code>.</p>
+      <div class="ak-answer-block">
+        <div class="ak-answer-label">✔ Accepted Answers</div>
+        <ul class="ak-answer-list">
+          <li><span class="ak-ans-num">1.</span><code class="ak-ans-code">//*[local-name()='svg'][@id='barChart']</code><span class="ak-primary-badge">Primary</span></li>
+          <li><span class="ak-ans-num">2.</span><code class="ak-ans-code">//*[@id='barChart']</code></li>
+          <li><span class="ak-ans-num">3.</span><code class="ak-ans-code">//svg[@id='barChart']</code></li>
+        </ul>
+      </div>
+      <div class="ak-explanation">
+        <strong>💡 Concept</strong>
+        SVG elements are in the SVG namespace. <code>local-name()</code> ignores namespaces and matches only the local tag name. <code>//*[@id='barChart']</code> also works because it uses a wildcard. For inner SVG elements like <code>&lt;rect&gt;</code> or <code>&lt;path&gt;</code>, always use <code>//*[local-name()='rect']</code>.
+      </div>
+    </div>
+
+
+    <!-- ════════════════════════════════════════════════════════════════
+         SECTION 5 — FRAMEWORK PATTERNS & ADVANCED COMBOS  (Q22–Q25)
+    ════════════════════════════════════════════════════════════════ -->
+    <div class="section-title">
+      <span class="sec-num">Section 5</span>
+      Framework Patterns &amp; Advanced Combinations
+      <span style="margin-left:auto;font-weight:400;font-size:11px;opacity:.8">Q22 – Q25</span>
+    </div>
+
+    <!-- Q22 -->
+    <div class="ak-card">
+      <div class="ak-card-header">
+        <span class="ak-qnum">Q22</span>
+        <span class="ak-topic">React / Framework — Custom data-* Attributes</span>
+        <span class="ak-type-badge ak-type-mcq">Multiple Choice</span>
+      </div>
+      <div class="ak-snippet-label">HTML Snippet</div>
+      <pre class="ak-snippet">&lt;ul data-component="TodoList"&gt;
+  &lt;li data-index="0" data-completed="false" data-id="todo_1"&gt;Buy groceries&lt;/li&gt;
+  &lt;li data-index="1" data-completed="true"  data-id="todo_2"&gt;Send report&lt;/li&gt;
+  &lt;li data-index="2" data-completed="false" data-id="todo_3"&gt;Book flight&lt;/li&gt;
+&lt;/ul&gt;</pre>
+      <p class="ak-q-text">Which XPath selects to-do items that are <strong>not yet completed</strong>?</p>
+      <div class="ak-answer-block">
+        <div class="ak-answer-label">✔ Correct Answer</div>
+        <div class="ak-mcq-answer">
+          <span class="ak-mcq-letter">A</span>
+          <code class="ak-mcq-text">//li[@data-completed='false']</code>
+        </div>
+      </div>
+      <div class="ak-explanation">
+        <strong>💡 Concept</strong>
+        <code>data-*</code> attribute values are always DOM strings. Use <code>@data-completed='false'</code> (string) not <code>@data-completed=false</code> (boolean, incorrect in XPath 1.0). This is a common bug when writing XPath for React/Vue/Angular rendered components.
+      </div>
+    </div>
+
+    <!-- Q23 -->
+    <div class="ak-card">
+      <div class="ak-card-header">
+        <span class="ak-qnum">Q23</span>
+        <span class="ak-topic">Wildcard * and @* (Any Element / Any Attribute)</span>
+        <span class="ak-type-badge ak-type-write">Write XPath</span>
+      </div>
+      <div class="ak-snippet-label">HTML Snippet</div>
+      <pre class="ak-snippet">&lt;section class="user-card"&gt;
+  &lt;div class="card-body"&gt;
+    &lt;span data-field="email"&gt;alice@example.com&lt;/span&gt;
+    &lt;span data-field="role"&gt;Administrator&lt;/span&gt;
+    &lt;span data-field="joined"&gt;2022-03-15&lt;/span&gt;
+  &lt;/div&gt;
+&lt;/section&gt;</pre>
+      <p class="ak-q-text">Write an XPath using <code>*</code> wildcard to select <strong>any element</strong> with <code>data-field='role'</code>.</p>
+      <div class="ak-answer-block">
+        <div class="ak-answer-label">✔ Accepted Answers</div>
+        <ul class="ak-answer-list">
+          <li><span class="ak-ans-num">1.</span><code class="ak-ans-code">//*[@data-field='role']</code><span class="ak-primary-badge">Primary</span></li>
+          <li><span class="ak-ans-num">2.</span><code class="ak-ans-code">//section//*[@data-field='role']</code></li>
+          <li><span class="ak-ans-num">3.</span><code class="ak-ans-code">//div[@class='card-body']//*[@data-field='role']</code></li>
+        </ul>
+      </div>
+      <div class="ak-explanation">
+        <strong>💡 Concept</strong>
+        <code>*</code> matches any element tag name. <code>//*[@data-field='role']</code> selects the span without needing to know it is a span. Use when the tag name may change between releases or implementations. <code>@*</code> can also match any attribute: <code>//*[@*='role']</code> selects any element having any attribute with value 'role'.
+      </div>
+    </div>
+
+    <!-- Q24 -->
+    <div class="ak-card">
+      <div class="ak-card-header">
+        <span class="ak-qnum">Q24</span>
+        <span class="ak-topic">not( contains() ) — Exclude by Partial Class</span>
+        <span class="ak-type-badge ak-type-mcq">Multiple Choice</span>
+      </div>
+      <div class="ak-snippet-label">HTML Snippet</div>
+      <pre class="ak-snippet">&lt;nav class="breadcrumb"&gt;
+  &lt;a href="/home"     class="crumb-link"&gt;Home&lt;/a&gt;
+  &lt;a href="/products" class="crumb-link"&gt;Products&lt;/a&gt;
+  &lt;a href="/laptops"  class="crumb-link"&gt;Laptops&lt;/a&gt;
+  &lt;span               class="crumb-link crumb-active"&gt;Dell XPS 15&lt;/span&gt;
+&lt;/nav&gt;</pre>
+      <p class="ak-q-text">Which XPath selects breadcrumb items <strong>excluding</strong> the one with class <code>crumb-active</code>?</p>
+      <div class="ak-answer-block">
+        <div class="ak-answer-label">✔ Correct Answer</div>
+        <div class="ak-mcq-answer">
+          <span class="ak-mcq-letter">B</span>
+          <code class="ak-mcq-text">//*[@class='crumb-link'][not(contains(@class,'crumb-active'))]</code>
+        </div>
+      </div>
+      <div class="ak-explanation">
+        <strong>💡 Concept</strong>
+        <code>not(contains(@class,'crumb-active'))</code> excludes elements whose class attribute contains that substring. Using exact match <code>@class='crumb-active'</code> would fail because the active element has two classes: <code>'crumb-link crumb-active'</code>. Always use <code>contains()</code> for multi-class elements.
+      </div>
+    </div>
+
+    <!-- Q25 -->
+    <div class="ak-card">
+      <div class="ak-card-header">
+        <span class="ak-qnum">Q25</span>
+        <span class="ak-topic">Complex Multi-Predicate — Axes + Functions Combined</span>
+        <span class="ak-type-badge ak-type-write">Write XPath</span>
+      </div>
+      <div class="ak-snippet-label">HTML Snippet</div>
+      <pre class="ak-snippet">&lt;div class="form-section"&gt;
+  &lt;div class="field-group has-error"&gt;
+    &lt;input type="text" id="cardNum" aria-invalid="true"&gt;
+    &lt;span class="error-msg"&gt;Card number must be 16 digits.&lt;/span&gt;
+  &lt;/div&gt;
+  &lt;div class="field-group"&gt;
+    &lt;input type="text" id="expiry" aria-invalid="false"&gt;
+  &lt;/div&gt;
+  &lt;div class="field-group has-error"&gt;
+    &lt;input type="text" id="cvv" aria-invalid="true"&gt;
+    &lt;span class="error-msg"&gt;CVV must be 3 digits.&lt;/span&gt;
+  &lt;/div&gt;
+&lt;/div&gt;</pre>
+      <p class="ak-q-text">Write an XPath to find <strong>all error message spans</strong> inside field groups that contain an input with <code>aria-invalid='true'</code>.</p>
+      <div class="ak-answer-block">
+        <div class="ak-answer-label">✔ Accepted Answers</div>
+        <ul class="ak-answer-list">
+          <li><span class="ak-ans-num">1.</span><code class="ak-ans-code">//div[contains(@class,'field-group')][input[@aria-invalid='true']]/span[@class='error-msg']</code><span class="ak-primary-badge">Primary</span></li>
+          <li><span class="ak-ans-num">2.</span><code class="ak-ans-code">//div[@class='field-group has-error']/span[@class='error-msg']</code></li>
+          <li><span class="ak-ans-num">3.</span><code class="ak-ans-code">//div[contains(@class,'has-error')]/span[contains(@class,'error-msg')]</code></li>
+          <li><span class="ak-ans-num">4.</span><code class="ak-ans-code">//input[@aria-invalid='true']/following-sibling::span[@class='error-msg']</code></li>
+        </ul>
+      </div>
+      <div class="ak-explanation">
+        <strong>💡 Concept</strong>
+        Answer 1 is the most semantically precise: it uses a parent predicate <code>[input[@aria-invalid='true']]</code> to filter containers, then navigates to the error span. Answer 4 uses <code>following-sibling::</code> which is equally elegant. Answer 2 uses a hardcoded class combination which is fragile. Answer 3 is more flexible. All four are valid in this HTML context.
+      </div>
+    </div>
+
+
+    <!-- ════════════════════════════════════════════════════════════════
+         QUICK REFERENCE SUMMARY TABLE
+    ════════════════════════════════════════════════════════════════ -->
+    <div class="summary-section">
+      <h2 class="summary-title">📋 Quick Reference — All 25 Answers</h2>
+      <table class="summary-table">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Topic</th>
+            <th>Type</th>
+            <th>Primary Correct Answer</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>1</td><td>normalize-space()</td><td><span class="type-badge tb-write">Write</span></td><td><code>//button[normalize-space()='Place Order']</code></td></tr>
+          <tr><td>2</td><td>not() Predicate</td><td><span class="type-badge tb-mcq">MCQ — B</span></td><td><code>//input[not(@disabled)]</code></td></tr>
+          <tr><td>3</td><td>XPath Union ( | )</td><td><span class="type-badge tb-write">Write</span></td><td><code>//button[@type='submit'] | //a[@href='/help']</code></td></tr>
+          <tr><td>4</td><td>translate() Case-Insensitive</td><td><span class="type-badge tb-mcq">MCQ — C</span></td><td><code>//a[translate(text(),'ABC...Z','abc...z')='dashboard']</code></td></tr>
+          <tr><td>5</td><td>count() Function</td><td><span class="type-badge tb-write">Write</span></td><td><code>count(//table[@id='ordersTable']/tbody/tr)</code></td></tr>
+          <tr><td>6</td><td>string-length()</td><td><span class="type-badge tb-mcq">MCQ — C</span></td><td><code>//li[string-length(@data-sku) > 4]</code></td></tr>
+          <tr><td>7</td><td>data-testid</td><td><span class="type-badge tb-write">Write</span></td><td><code>//button[@data-testid='login-submit']</code></td></tr>
+          <tr><td>8</td><td>data-cy Attribute</td><td><span class="type-badge tb-mcq">MCQ — B</span></td><td><code>//select[@data-cy='country-select']</code></td></tr>
+          <tr><td>9</td><td>aria-label</td><td><span class="type-badge tb-write">Write</span></td><td><code>//button[@aria-label='Close dialog']</code></td></tr>
+          <tr><td>10</td><td>aria-placeholder</td><td><span class="type-badge tb-mcq">MCQ — B</span></td><td><code>//div[@aria-placeholder='Search for products...']</code></td></tr>
+          <tr><td>11</td><td>aria-expanded</td><td><span class="type-badge tb-write">Write</span></td><td><code>//button[@aria-expanded='true']</code></td></tr>
+          <tr><td>12</td><td>aria-selected</td><td><span class="type-badge tb-mcq">MCQ — B</span></td><td><code>//button[@aria-selected='true']</code></td></tr>
+          <tr><td>13</td><td>aria-checked</td><td><span class="type-badge tb-write">Write</span></td><td><code>//*[@role='checkbox'][@aria-checked='true']</code></td></tr>
+          <tr><td>14</td><td>Hidden Input</td><td><span class="type-badge tb-mcq">MCQ — A</span></td><td><code>//input[@type='hidden' and @name='csrf_token']</code></td></tr>
+          <tr><td>15</td><td>Disabled Elements</td><td><span class="type-badge tb-write">Write</span></td><td><code>//button[@disabled]</code></td></tr>
+          <tr><td>16</td><td>Read-Only Input</td><td><span class="type-badge tb-mcq">MCQ — C</span></td><td><code>//input[@readonly]</code></td></tr>
+          <tr><td>17</td><td>File Upload Input</td><td><span class="type-badge tb-write">Write</span></td><td><code>//input[@type='file'][@name='resume']</code></td></tr>
+          <tr><td>18</td><td>Select Dropdown</td><td><span class="type-badge tb-mcq">MCQ — D</span></td><td>All options are valid</td></tr>
+          <tr><td>19</td><td>Table Cell by Header</td><td><span class="type-badge tb-write">Write</span></td><td><code>//tr[td[1][text()='USB-C Hub']]/td[count(//th[text()='Price']/preceding-sibling::th)+1]</code></td></tr>
+          <tr><td>20</td><td>contenteditable Editor</td><td><span class="type-badge tb-mcq">MCQ — D</span></td><td>All options are valid</td></tr>
+          <tr><td>21</td><td>SVG local-name()</td><td><span class="type-badge tb-write">Write</span></td><td><code>//*[local-name()='svg'][@id='barChart']</code></td></tr>
+          <tr><td>22</td><td>React data-* Attributes</td><td><span class="type-badge tb-mcq">MCQ — A</span></td><td><code>//li[@data-completed='false']</code></td></tr>
+          <tr><td>23</td><td>Wildcard * Selector</td><td><span class="type-badge tb-write">Write</span></td><td><code>//*[@data-field='role']</code></td></tr>
+          <tr><td>24</td><td>not(contains()) Combo</td><td><span class="type-badge tb-mcq">MCQ — B</span></td><td><code>//*[@class='crumb-link'][not(contains(@class,'crumb-active'))]</code></td></tr>
+          <tr><td>25</td><td>Complex Multi-Predicate</td><td><span class="type-badge tb-write">Write</span></td><td><code>//div[contains(@class,'field-group')][input[@aria-invalid='true']]/span[@class='error-msg']</code></td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="ak-footer">
+      XPath Advanced Practice Paper 2 — Answer Key &nbsp;|&nbsp; QA Automation Training &nbsp;|&nbsp; For Trainer Use Only
+    </div>
+
+  </main>
+
+  </div><!-- end #mainContent -->
+
+  <script>
+    /* ── Password check ──────────────────────────────────────────────── */
+    const CORRECT_HASH = "5d43820495cfb413a3e21675f6ebd2de0914dec40456f55bd722e5a9d1ebe4f8";
+
+    // Simple SHA-256 via SubtleCrypto (works in all modern browsers locally)
+    async function sha256(message) {
+      const msgBuffer = new TextEncoder().encode(message);
+      const hashBuffer = await crypto.subtle.digest("SHA-256", msgBuffer);
+      const hashArray  = Array.from(new Uint8Array(hashBuffer));
+      return hashArray.map(b => b.toString(16).padStart(2, "0")).join("");
+    }
+
+    async function checkPwd() {
+      const input = document.getElementById("pwInput").value;
+      const errEl = document.getElementById("pwError");
+      if (!input) {
+        errEl.textContent = "Please enter a password.";
+        return;
+      }
+      const hash = await sha256(input);
+      if (hash === CORRECT_HASH) {
+        document.getElementById("lockScreen").style.display  = "none";
+        document.getElementById("mainContent").style.display = "block";
+        errEl.textContent = "";
+        // Save unlock in sessionStorage so refresh doesn't re-lock
+        sessionStorage.setItem("ak_unlocked", "1");
+      } else {
+        errEl.textContent = "Incorrect password. Please try again.";
+        document.getElementById("pwInput").value = "";
+        document.getElementById("pwInput").focus();
+      }
+    }
+
+    // Auto-unlock if already verified this session
+    if (sessionStorage.getItem("ak_unlocked") === "1") {
+      document.getElementById("lockScreen").style.display  = "none";
+      document.getElementById("mainContent").style.display = "block";
+    }
+  </script>
+</body>
+</html>

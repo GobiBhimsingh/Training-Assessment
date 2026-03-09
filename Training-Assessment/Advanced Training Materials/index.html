@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>XPath Advanced Assessment — Paper 2</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- ════════════════════════════════════════════════════════════════════
+       HEADER
+  ════════════════════════════════════════════════════════════════════ -->
+  <header class="site-header">
+    <div class="page-wrap">
+      <div class="header-top">
+        <span class="header-badge">QA Automation Training</span>
+        <span class="header-badge header-badge-adv">Advanced — Paper 2</span>
+      </div>
+      <h1>XPath &amp; Web DOM — Advanced Assessment</h1>
+      <p class="header-sub">
+        25 questions &nbsp;|&nbsp; Write XPath &amp; Multiple Choice &nbsp;|&nbsp; Instant Feedback + Explanations
+      </p>
+      <p class="paper-number">Covers: Advanced Functions · ARIA · data-* · DOM Structures · Special States · Framework Patterns</p>
+    </div>
+  </header>
+
+  <main class="page-wrap">
+
+    <!-- ─── Instructions ──────────────────────────────────────────────── -->
+    <div class="instructions">
+      <h2>📋 Instructions</h2>
+      <ul>
+        <li>This paper covers <strong>advanced XPath functions, ARIA attributes, data-* attributes, complex DOM structures,</strong> and <strong>modern framework patterns</strong>.</li>
+        <li>For <strong>Write XPath</strong> questions — type your answer and click <strong>Check Answer</strong>. Multiple valid answers are accepted.</li>
+        <li>For <strong>Multiple Choice</strong> questions — select the best option and click <strong>Check Answer</strong>.</li>
+        <li>After each answer you will see a <strong>💡 Explanation</strong> — read it to reinforce the concept even when you are correct.</li>
+        <li>Use the number navigator below to jump between questions freely.</li>
+        <li>Click <strong>Submit All</strong> on the last question to view your final score.</li>
+      </ul>
+    </div>
+
+    <!-- ─── Progress bar ──────────────────────────────────────────────── -->
+    <div class="progress-wrap" id="progressWrap">
+      <div class="progress-header">
+        <span class="progress-title">Progress</span>
+        <span id="progressLabel">0 / 25 answered</span>
+      </div>
+      <div class="progress-track">
+        <div id="progressBar"></div>
+      </div>
+    </div>
+
+    <!-- ─── Step navigator ────────────────────────────────────────────── -->
+    <div id="stepNav"></div>
+
+    <!-- ─── Questions (built by script.js) ───────────────────────────── -->
+    <div id="questionsContainer"></div>
+
+    <!-- ════════════════════════════════════════════════════════════════
+         RESULT SECTION  (hidden until Submit All)
+    ════════════════════════════════════════════════════════════════ -->
+    <section id="resultSection" class="hidden">
+      <div class="result-card">
+        <h2 class="result-title">📊 Assessment Complete — Paper 2</h2>
+
+        <div class="score-grid">
+          <div class="score-item">
+            <span class="score-val" id="res-total">—</span>
+            <div class="score-lbl">Total Questions</div>
+          </div>
+          <div class="score-item">
+            <span class="score-val" id="res-correct" style="color:var(--clr-correct)">—</span>
+            <div class="score-lbl">Correct</div>
+          </div>
+          <div class="score-item">
+            <span class="score-val" id="res-wrong" style="color:var(--clr-wrong)">—</span>
+            <div class="score-lbl">Incorrect</div>
+          </div>
+          <div class="score-item score-pct">
+            <span class="score-val" id="res-pct">—</span>
+            <div class="score-lbl">Score</div>
+          </div>
+        </div>
+
+        <div id="performanceMsg" class="perf-msg"></div>
+        <br>
+        <button class="btn-reset" onclick="resetAll()">🔄 Restart Assessment</button>
+      </div>
+    </section>
+
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>
