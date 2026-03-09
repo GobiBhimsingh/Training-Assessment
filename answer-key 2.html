@@ -1,0 +1,1039 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Answer Key — XPath Practice Paper 1 (Trainer Only)</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --primary:    #2c5f9e;
+      --primary-dk: #1e4275;
+      --accent:     #3b82f6;
+      --bg:         #f5f6fa;
+      --surface:    #ffffff;
+      --border:     #dde1ea;
+      --text:       #1e2330;
+      --muted:      #5a6175;
+      --code-bg:    #f0f4f8;
+      --correct:    #16a34a;
+      --correct-bg: #dcfce7;
+      --tag:        #e0e7ff;
+      --tag-text:   #3730a3;
+      --mono:       'Consolas', 'Courier New', monospace;
+      --sans:       'Segoe UI', Arial, sans-serif;
+    }
+
+    body {
+      font-family:    var(--sans);
+      background:     var(--bg);
+      color:          var(--text);
+      font-size:      14px;
+      line-height:    1.65;
+      padding-bottom: 60px;
+    }
+
+    .page-wrap { max-width: 900px; margin: 0 auto; padding: 0 16px; }
+
+    /* ── Header ──────────────────────────────────────────────────────── */
+    .ak-header {
+      background:    var(--primary);
+      color:         #fff;
+      padding:       26px 0 20px;
+      margin-bottom: 28px;
+      border-bottom: 4px solid var(--primary-dk);
+    }
+    .ak-header .page-wrap { display: flex; flex-direction: column; gap: 5px; }
+
+    .badge-row { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 8px; }
+    .badge {
+      display:       inline-block;
+      border-radius: 20px;
+      font-size:     11px;
+      letter-spacing:.08em;
+      text-transform:uppercase;
+      padding:       3px 12px;
+    }
+    .badge-paper   { background: rgba(255,255,255,.15); border: 1px solid rgba(255,255,255,.3); }
+    .badge-trainer { background: rgba(220,38,38,.55);   border: 1px solid rgba(252,165,165,.55); }
+
+    .ak-header h1 { font-size: 24px; font-weight: 700; }
+    .ak-header p  { font-size: 13px; opacity: .82; }
+
+    /* ── Warning banner ──────────────────────────────────────────────── */
+    .trainer-warning {
+      background:    #fef3c7;
+      border:        1px solid #f59e0b;
+      border-left:   5px solid #d97706;
+      border-radius: 6px;
+      padding:       14px 18px;
+      margin-bottom: 28px;
+      font-size:     13.5px;
+      color:         #78350f;
+    }
+    .trainer-warning strong { display: block; margin-bottom: 4px; font-size: 14px; }
+
+    /* ── Section header ──────────────────────────────────────────────── */
+    .section-title {
+      background:    var(--primary);
+      color:         #fff;
+      padding:       10px 18px;
+      border-radius: 6px;
+      font-size:     13px;
+      font-weight:   700;
+      letter-spacing:.04em;
+      margin:        28px 0 14px;
+      display:       flex;
+      align-items:   center;
+      gap:           10px;
+    }
+    .section-title .sec-num {
+      background: rgba(255,255,255,.2);
+      border-radius: 4px;
+      padding: 1px 8px;
+      font-size: 11px;
+    }
+
+    /* ── Question answer card ────────────────────────────────────────── */
+    .ak-card {
+      background:    var(--surface);
+      border:        1px solid var(--border);
+      border-radius: 8px;
+      padding:       20px 22px;
+      margin-bottom: 14px;
+      box-shadow:    0 1px 6px rgba(0,0,0,.06);
+    }
+
+    .ak-card-header {
+      display:         flex;
+      justify-content: space-between;
+      align-items:     flex-start;
+      flex-wrap:       wrap;
+      gap:             8px;
+      margin-bottom:   12px;
+      padding-bottom:  10px;
+      border-bottom:   1px solid var(--border);
+    }
+
+    .ak-qnum  { font-size: 13px; font-weight: 700; color: var(--primary); }
+    .ak-topic {
+      background: var(--tag); color: var(--tag-text);
+      font-size: 11.5px; font-weight: 600;
+      padding: 3px 10px; border-radius: 20px;
+    }
+
+    .ak-type-badge {
+      font-size: 11px; font-weight: 700;
+      padding: 2px 9px; border-radius: 20px;
+      text-transform: uppercase; letter-spacing: .06em;
+    }
+    .ak-type-write { background: #dbeafe; color: #1e40af; }
+    .ak-type-mcq   { background: var(--tag); color: var(--tag-text); }
+
+    /* Snippet */
+    .ak-snippet-label {
+      font-size: 10.5px; font-weight: 700;
+      text-transform: uppercase; letter-spacing: .07em;
+      color: var(--muted); margin-bottom: 5px;
+    }
+    .ak-snippet {
+      background:    var(--code-bg);
+      border:        1px solid var(--border);
+      border-radius: 5px;
+      padding:       10px 14px;
+      font-family:   var(--mono);
+      font-size:     12px;
+      line-height:   1.7;
+      color:         #2d3a52;
+      white-space:   pre;
+      overflow-x:    auto;
+      margin-bottom: 12px;
+    }
+
+    /* Question text */
+    .ak-q-text {
+      font-size: 13.5px; color: var(--muted);
+      margin-bottom: 12px; line-height: 1.7;
+    }
+    .ak-q-text code {
+      background: var(--code-bg); border: 1px solid var(--border);
+      padding: 1px 5px; border-radius: 3px;
+      font-family: var(--mono); font-size: 12.5px;
+    }
+
+    /* Answer block */
+    .ak-answer-block {
+      background:    var(--correct-bg);
+      border:        1px solid #86efac;
+      border-left:   4px solid var(--correct);
+      border-radius: 6px;
+      padding:       12px 16px;
+    }
+    .ak-answer-label {
+      font-size: 11px; font-weight: 700;
+      text-transform: uppercase; letter-spacing: .07em;
+      color: var(--correct); margin-bottom: 8px;
+    }
+
+    /* Write answers */
+    .ak-answer-list { list-style: none; padding: 0; }
+    .ak-answer-list li {
+      margin-bottom: 5px; display: flex;
+      align-items: flex-start; gap: 8px;
+    }
+    .ak-ans-num {
+      font-size: 11px; font-weight: 700;
+      color: var(--correct); min-width: 20px; padding-top: 2px;
+    }
+    .ak-ans-code {
+      font-family: var(--mono); font-size: 12.5px;
+      background: rgba(255,255,255,.7); border: 1px solid #86efac;
+      border-radius: 4px; padding: 2px 8px;
+      color: #14532d; word-break: break-all; flex: 1;
+    }
+    .ak-primary-badge {
+      font-size: 10px; background: var(--correct); color: #fff;
+      border-radius: 3px; padding: 1px 5px;
+      white-space: nowrap; align-self: center;
+    }
+
+    /* MCQ answer */
+    .ak-mcq-answer { display: flex; align-items: flex-start; gap: 10px; }
+    .ak-mcq-letter { font-size: 22px; font-weight: 800; color: var(--correct); line-height: 1; min-width: 24px; }
+    .ak-mcq-text   { font-family: var(--mono); font-size: 13px; color: #14532d; line-height: 1.6; }
+
+    /* Summary table */
+    .summary-section { margin-top: 36px; }
+    .summary-title {
+      font-size: 17px; font-weight: 700;
+      color: var(--primary); margin-bottom: 14px;
+      padding-bottom: 8px; border-bottom: 2px solid var(--border);
+    }
+    .summary-table { width: 100%; border-collapse: collapse; font-size: 13px; }
+    .summary-table th {
+      background: var(--primary); color: #fff;
+      padding: 9px 12px; text-align: left; font-weight: 600;
+    }
+    .summary-table td {
+      padding: 8px 12px; border-bottom: 1px solid var(--border); vertical-align: top;
+    }
+    .summary-table tr:nth-child(even) td { background: var(--bg); }
+    .type-badge {
+      font-size: 11px; padding: 2px 8px;
+      border-radius: 20px; font-weight: 600;
+    }
+    .tb-write { background: #dbeafe; color: #1e40af; }
+    .tb-mcq   { background: var(--tag); color: var(--tag-text); }
+    .summary-table code {
+      font-family: var(--mono); font-size: 12px;
+      background: var(--code-bg); padding: 1px 4px; border-radius: 3px;
+    }
+
+    /* Footer */
+    .ak-footer {
+      margin-top: 40px; padding-top: 16px;
+      border-top: 1px dashed var(--border);
+      font-size: 12px; color: var(--muted); text-align: center;
+    }
+
+    /* Print */
+    @media print {
+      .trainer-warning { display: none; }
+      body { font-size: 12px; }
+      .ak-card { break-inside: avoid; margin-bottom: 10px; }
+    }
+    @media (max-width: 540px) {
+      .ak-card { padding: 14px; }
+      .ak-snippet { font-size: 11px; }
+    }
+  </style>
+</head>
+<body>
+  <!-- ════════════════════════════════════════════════════════════════════
+       PASSWORD LOCK  –  correct password: xpath@training
+       Change HASH constant below if you ever change the password.
+       Generate a new SHA-256 hash at: https://emn178.github.io/online-tools/sha256.html
+       ════════════════════════════════════════════════════════════════════ -->
+  <div id="lockScreen" style="
+    position:fixed;inset:0;z-index:9999;
+    background:linear-gradient(135deg,#1e3a5f 0%,#2c5f9e 100%);
+    display:flex;align-items:center;justify-content:center;
+    font-family:'Segoe UI',Arial,sans-serif;">
+    <div style="
+      background:#fff;border-radius:14px;padding:44px 40px 36px;
+      width:360px;max-width:92vw;
+      box-shadow:0 20px 60px rgba(0,0,0,.45);
+      text-align:center;">
+      <div style="font-size:48px;margin-bottom:12px;">🔒</div>
+      <h2 style="color:#1e3a5f;font-size:20px;margin-bottom:6px;">Trainer Access Only</h2>
+      <p style="color:#5a6175;font-size:13px;margin-bottom:24px;">
+        This answer key is password protected.<br>Enter the trainer password to continue.
+      </p>
+      <input id="pwInput" type="password"
+        placeholder="Enter password"
+        style="
+          width:100%;padding:11px 14px;border:1.5px solid #dde1ea;
+          border-radius:7px;font-size:14px;outline:none;
+          color:#1e2330;margin-bottom:10px;box-sizing:border-box;
+          transition:border-color .2s;"
+        onkeydown="if(event.key==='Enter') checkPwd()"
+        onfocus="this.style.borderColor='#2c5f9e'"
+        onblur="this.style.borderColor='#dde1ea'" />
+      <div id="pwError" style="
+        color:#dc2626;font-size:12px;margin-bottom:10px;
+        min-height:16px;font-weight:600;"></div>
+      <button onclick="checkPwd()" style="
+        width:100%;padding:11px;background:#2c5f9e;color:#fff;
+        border:none;border-radius:7px;font-size:14px;font-weight:700;
+        cursor:pointer;transition:background .2s;"
+        onmouseover="this.style.background='#1e4275'"
+        onmouseout="this.style.background='#2c5f9e'">
+        Unlock Answer Key
+      </button>
+      <p style="margin-top:18px;font-size:11px;color:#9ca3af;">
+        Unauthorised access is prohibited.
+      </p>
+    </div>
+  </div>
+
+  <!-- Main content hidden until password verified -->
+  <div id="mainContent" style="display:none;">
+
+
+  <header class="ak-header">
+    <div class="page-wrap">
+      <div class="badge-row">
+        <span class="badge badge-paper">QA Automation Training</span>
+        <span class="badge badge-trainer">🔒 Trainer Use Only</span>
+        <span class="badge badge-paper">Paper 1 — Core Concepts</span>
+      </div>
+      <h1>Answer Key — XPath Practice Assessment</h1>
+      <p>All 25 questions · Correct answers · Accepted alternatives</p>
+    </div>
+  </header>
+
+  <main class="page-wrap">
+
+    <div class="trainer-warning">
+      <strong>⚠ Trainer-Only Document</strong>
+      This file contains all correct answers for Paper 1.
+      Share only <code>index.html</code>, <code>style.css</code>, and <code>script.js</code> with candidates.
+      Do <strong>not</strong> distribute this file.
+    </div>
+
+    <!-- ════════════════════════════════════════════════════════════════
+         SECTION 1 — XPATH FUNDAMENTALS  Q1–Q5
+    ════════════════════════════════════════════════════════════════ -->
+    <div class="section-title">
+      <span class="sec-num">Section 1</span>
+      XPath Fundamentals
+      <span style="margin-left:auto;font-weight:400;font-size:11px;opacity:.8">Q1 – Q5</span>
+    </div>
+
+    <!-- Q1 -->
+    <div class="ak-card">
+      <div class="ak-card-header">
+        <span class="ak-qnum">Q1</span>
+        <span class="ak-topic">Relative XPath — Input field</span>
+        <span class="ak-type-badge ak-type-write">Write XPath</span>
+      </div>
+      <div class="ak-snippet-label">HTML Snippet</div>
+      <pre class="ak-snippet">&lt;form id="loginForm"&gt;
+  &lt;label for="username"&gt;Username&lt;/label&gt;
+  &lt;input type="text" id="username" name="userName"&gt;
+  &lt;label for="password"&gt;Password&lt;/label&gt;
+  &lt;input type="password" id="password" name="password"&gt;
+  &lt;button type="submit"&gt;Login&lt;/button&gt;
+&lt;/form&gt;</pre>
+      <p class="ak-q-text">Write an XPath to select the <strong>username</strong> input field.</p>
+      <div class="ak-answer-block">
+        <div class="ak-answer-label">✔ Accepted Answers</div>
+        <ul class="ak-answer-list">
+          <li><span class="ak-ans-num">1.</span><code class="ak-ans-code">//input[@id='username']</code><span class="ak-primary-badge">Primary</span></li>
+          <li><span class="ak-ans-num">2.</span><code class="ak-ans-code">//input[@name='userName']</code></li>
+          <li><span class="ak-ans-num">3.</span><code class="ak-ans-code">//form[@id='loginForm']//input[@type='text']</code></li>
+          <li><span class="ak-ans-num">4.</span><code class="ak-ans-code">//input[@type='text'][@id='username']</code></li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Q2 -->
+    <div class="ak-card">
+      <div class="ak-card-header">
+        <span class="ak-qnum">Q2</span>
+        <span class="ak-topic">Absolute XPath</span>
+        <span class="ak-type-badge ak-type-mcq">Multiple Choice</span>
+      </div>
+      <div class="ak-snippet-label">HTML Snippet</div>
+      <pre class="ak-snippet">&lt;html&gt;&lt;body&gt;&lt;div&gt;&lt;form&gt;&lt;input type="text" id="email"&gt;&lt;/form&gt;&lt;/div&gt;&lt;/body&gt;&lt;/html&gt;</pre>
+      <p class="ak-q-text">Which is a valid <strong>absolute XPath</strong> to reach the email input?</p>
+      <div class="ak-answer-block">
+        <div class="ak-answer-label">✔ Correct Answer</div>
+        <div class="ak-mcq-answer">
+          <span class="ak-mcq-letter">A</span>
+          <code class="ak-mcq-text">/html/body/div/form/input</code>
+        </div>
+      </div>
+    </div>
+
+    <!-- Q3 -->
+    <div class="ak-card">
+      <div class="ak-card-header">
+        <span class="ak-qnum">Q3</span>
+        <span class="ak-topic">Select by Attribute</span>
+        <span class="ak-type-badge ak-type-write">Write XPath</span>
+      </div>
+      <div class="ak-snippet-label">HTML Snippet</div>
+      <pre class="ak-snippet">&lt;div class="actions"&gt;
+  &lt;button type="submit"&gt;Login&lt;/button&gt;
+  &lt;button type="button"&gt;Cancel&lt;/button&gt;
+&lt;/div&gt;</pre>
+      <p class="ak-q-text">Write an XPath to select <strong>only the submit button</strong> using its <code>type</code> attribute.</p>
+      <div class="ak-answer-block">
+        <div class="ak-answer-label">✔ Accepted Answers</div>
+        <ul class="ak-answer-list">
+          <li><span class="ak-ans-num">1.</span><code class="ak-ans-code">//button[@type='submit']</code><span class="ak-primary-badge">Primary</span></li>
+          <li><span class="ak-ans-num">2.</span><code class="ak-ans-code">//div[@class='actions']/button[@type='submit']</code></li>
+          <li><span class="ak-ans-num">3.</span><code class="ak-ans-code">//div/button[@type='submit']</code></li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Q4 -->
+    <div class="ak-card">
+      <div class="ak-card-header">
+        <span class="ak-qnum">Q4</span>
+        <span class="ak-topic">Select by text()</span>
+        <span class="ak-type-badge ak-type-mcq">Multiple Choice</span>
+      </div>
+      <div class="ak-snippet-label">HTML Snippet</div>
+      <pre class="ak-snippet">&lt;div class="actions"&gt;
+  &lt;button type="submit"&gt;Login&lt;/button&gt;
+  &lt;button type="button"&gt;Cancel&lt;/button&gt;
+&lt;/div&gt;</pre>
+      <p class="ak-q-text">Pick the correct XPath to click the <strong>Login button</strong> by its visible text.</p>
+      <div class="ak-answer-block">
+        <div class="ak-answer-label">✔ Correct Answer</div>
+        <div class="ak-mcq-answer">
+          <span class="ak-mcq-letter">B</span>
+          <code class="ak-mcq-text">//button[text()='Login']</code>
+        </div>
+      </div>
+    </div>
+
+    <!-- Q5 -->
+    <div class="ak-card">
+      <div class="ak-card-header">
+        <span class="ak-qnum">Q5</span>
+        <span class="ak-topic">contains() — Class attribute</span>
+        <span class="ak-type-badge ak-type-write">Write XPath</span>
+      </div>
+      <div class="ak-snippet-label">HTML Snippet</div>
+      <pre class="ak-snippet">&lt;div class="nav-menu primary-nav"&gt;
+  &lt;a href="/home"&gt;Home&lt;/a&gt;
+  &lt;a href="/about"&gt;About&lt;/a&gt;
+  &lt;a href="/contact"&gt;Contact&lt;/a&gt;
+&lt;/div&gt;</pre>
+      <p class="ak-q-text">The div class always <strong>contains</strong> <em>nav-menu</em>. Write an XPath to select this div.</p>
+      <div class="ak-answer-block">
+        <div class="ak-answer-label">✔ Accepted Answers</div>
+        <ul class="ak-answer-list">
+          <li><span class="ak-ans-num">1.</span><code class="ak-ans-code">//div[contains(@class,'nav-menu')]</code><span class="ak-primary-badge">Primary</span></li>
+          <li><span class="ak-ans-num">2.</span><code class="ak-ans-code">//div[contains(@class, 'nav-menu')]</code></li>
+          <li><span class="ak-ans-num">3.</span><code class="ak-ans-code">//div[contains(@class,'primary-nav')]</code></li>
+          <li><span class="ak-ans-num">4.</span><code class="ak-ans-code">//div[contains(@class, 'primary-nav')]</code></li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- ════════════════════════════════════════════════════════════════
+         SECTION 2 — PREDICATES & CONDITIONS  Q6–Q11
+    ════════════════════════════════════════════════════════════════ -->
+    <div class="section-title">
+      <span class="sec-num">Section 2</span>
+      Predicates, Conditions &amp; Functions
+      <span style="margin-left:auto;font-weight:400;font-size:11px;opacity:.8">Q6 – Q11</span>
+    </div>
+
+    <!-- Q6 -->
+    <div class="ak-card">
+      <div class="ak-card-header">
+        <span class="ak-qnum">Q6</span>
+        <span class="ak-topic">starts-with() — Dynamic IDs</span>
+        <span class="ak-type-badge ak-type-mcq">Multiple Choice</span>
+      </div>
+      <div class="ak-snippet-label">HTML Snippet</div>
+      <pre class="ak-snippet">&lt;table&gt;
+  &lt;tr&gt;
+    &lt;td id="row_001"&gt;Alice&lt;/td&gt;
+    &lt;td id="row_002"&gt;Bob&lt;/td&gt;
+    &lt;td id="row_003"&gt;Charlie&lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/table&gt;</pre>
+      <p class="ak-q-text">IDs always <strong>start with</strong> <code>row_</code>. Which XPath selects all such cells?</p>
+      <div class="ak-answer-block">
+        <div class="ak-answer-label">✔ Correct Answer</div>
+        <div class="ak-mcq-answer">
+          <span class="ak-mcq-letter">C</span>
+          <code class="ak-mcq-text">//td[starts-with(@id,'row_')]</code>
+        </div>
+      </div>
+    </div>
+
+    <!-- Q7 -->
+    <div class="ak-card">
+      <div class="ak-card-header">
+        <span class="ak-qnum">Q7</span>
+        <span class="ak-topic">AND condition</span>
+        <span class="ak-type-badge ak-type-write">Write XPath</span>
+      </div>
+      <div class="ak-snippet-label">HTML Snippet</div>
+      <pre class="ak-snippet">&lt;form id="signupForm"&gt;
+  &lt;input type="text" name="firstName" placeholder="First Name"&gt;
+  &lt;input type="text" name="lastName"  placeholder="Last Name"&gt;
+  &lt;input type="email" name="email"    placeholder="Email"&gt;
+  &lt;input type="submit" value="Register"&gt;
+&lt;/form&gt;</pre>
+      <p class="ak-q-text">Write an XPath to select the input with <strong>both</strong> <code>type='text'</code> <strong>and</strong> <code>name='firstName'</code>.</p>
+      <div class="ak-answer-block">
+        <div class="ak-answer-label">✔ Accepted Answers</div>
+        <ul class="ak-answer-list">
+          <li><span class="ak-ans-num">1.</span><code class="ak-ans-code">//input[@type='text' and @name='firstName']</code><span class="ak-primary-badge">Primary</span></li>
+          <li><span class="ak-ans-num">2.</span><code class="ak-ans-code">//input[@name='firstName' and @type='text']</code></li>
+          <li><span class="ak-ans-num">3.</span><code class="ak-ans-code">//form//input[@type='text' and @name='firstName']</code></li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Q8 -->
+    <div class="ak-card">
+      <div class="ak-card-header">
+        <span class="ak-qnum">Q8</span>
+        <span class="ak-topic">OR condition</span>
+        <span class="ak-type-badge ak-type-write">Write XPath</span>
+      </div>
+      <div class="ak-snippet-label">HTML Snippet</div>
+      <pre class="ak-snippet">&lt;form id="registerForm"&gt;
+  &lt;input type="text"     id="username" placeholder="Username"&gt;
+  &lt;input type="password" id="password" placeholder="Password"&gt;
+  &lt;input type="email"    id="email"    placeholder="Email"&gt;
+&lt;/form&gt;</pre>
+      <p class="ak-q-text">Write an XPath to select inputs whose type is <strong>either</strong> <code>text</code> <strong>or</strong> <code>email</code>.</p>
+      <div class="ak-answer-block">
+        <div class="ak-answer-label">✔ Accepted Answers</div>
+        <ul class="ak-answer-list">
+          <li><span class="ak-ans-num">1.</span><code class="ak-ans-code">//input[@type='text' or @type='email']</code><span class="ak-primary-badge">Primary</span></li>
+          <li><span class="ak-ans-num">2.</span><code class="ak-ans-code">//form//input[@type='text' or @type='email']</code></li>
+          <li><span class="ak-ans-num">3.</span><code class="ak-ans-code">//form[@id='registerForm']//input[@type='text' or @type='email']</code></li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Q9 -->
+    <div class="ak-card">
+      <div class="ak-card-header">
+        <span class="ak-qnum">Q9</span>
+        <span class="ak-topic">Indexing</span>
+        <span class="ak-type-badge ak-type-write">Write XPath</span>
+      </div>
+      <div class="ak-snippet-label">HTML Snippet</div>
+      <pre class="ak-snippet">&lt;ul id="menuList"&gt;
+  &lt;li&gt;Dashboard&lt;/li&gt;
+  &lt;li&gt;Reports&lt;/li&gt;
+  &lt;li&gt;Settings&lt;/li&gt;
+  &lt;li&gt;Logout&lt;/li&gt;
+&lt;/ul&gt;</pre>
+      <p class="ak-q-text">Write an XPath to select the <strong>third list item</strong> (Settings) using index.</p>
+      <div class="ak-answer-block">
+        <div class="ak-answer-label">✔ Accepted Answers</div>
+        <ul class="ak-answer-list">
+          <li><span class="ak-ans-num">1.</span><code class="ak-ans-code">//ul[@id='menuList']/li[3]</code><span class="ak-primary-badge">Primary</span></li>
+          <li><span class="ak-ans-num">2.</span><code class="ak-ans-code">(//li)[3]</code></li>
+          <li><span class="ak-ans-num">3.</span><code class="ak-ans-code">//ul/li[3]</code></li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Q10 -->
+    <div class="ak-card">
+      <div class="ak-card-header">
+        <span class="ak-qnum">Q10</span>
+        <span class="ak-topic">last() function</span>
+        <span class="ak-type-badge ak-type-mcq">Multiple Choice</span>
+      </div>
+      <div class="ak-snippet-label">HTML Snippet</div>
+      <pre class="ak-snippet">&lt;ul id="steps"&gt;
+  &lt;li&gt;Step 1: Fill form&lt;/li&gt;
+  &lt;li&gt;Step 2: Review&lt;/li&gt;
+  &lt;li&gt;Step 3: Submit&lt;/li&gt;
+&lt;/ul&gt;</pre>
+      <p class="ak-q-text">Which XPath selects the <strong>last</strong> list item regardless of count?</p>
+      <div class="ak-answer-block">
+        <div class="ak-answer-label">✔ Correct Answer</div>
+        <div class="ak-mcq-answer">
+          <span class="ak-mcq-letter">C</span>
+          <code class="ak-mcq-text">//ul/li[last()]</code>
+        </div>
+      </div>
+    </div>
+
+    <!-- Q11 -->
+    <div class="ak-card">
+      <div class="ak-card-header">
+        <span class="ak-qnum">Q11</span>
+        <span class="ak-topic">position() function</span>
+        <span class="ak-type-badge ak-type-write">Write XPath</span>
+      </div>
+      <div class="ak-snippet-label">HTML Snippet</div>
+      <pre class="ak-snippet">&lt;table id="dataTable"&gt;
+  &lt;tr&gt;&lt;td&gt;Row 1&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;Row 2&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;Row 3&lt;/td&gt;&lt;/tr&gt;
+&lt;/table&gt;</pre>
+      <p class="ak-q-text">Write an XPath to select the <strong>second</strong> <code>&lt;tr&gt;</code> using <code>position()</code>.</p>
+      <div class="ak-answer-block">
+        <div class="ak-answer-label">✔ Accepted Answers</div>
+        <ul class="ak-answer-list">
+          <li><span class="ak-ans-num">1.</span><code class="ak-ans-code">//table[@id='dataTable']/tr[position()=2]</code><span class="ak-primary-badge">Primary</span></li>
+          <li><span class="ak-ans-num">2.</span><code class="ak-ans-code">//tr[position()=2]</code></li>
+          <li><span class="ak-ans-num">3.</span><code class="ak-ans-code">//table/tr[position()=2]</code></li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- ════════════════════════════════════════════════════════════════
+         SECTION 3 — XPath AXES  Q12–Q20
+    ════════════════════════════════════════════════════════════════ -->
+    <div class="section-title">
+      <span class="sec-num">Section 3</span>
+      XPath Axes
+      <span style="margin-left:auto;font-weight:400;font-size:11px;opacity:.8">Q12 – Q20</span>
+    </div>
+
+    <!-- Q12 -->
+    <div class="ak-card">
+      <div class="ak-card-header">
+        <span class="ak-qnum">Q12</span>
+        <span class="ak-topic">parent:: axis</span>
+        <span class="ak-type-badge ak-type-mcq">Multiple Choice</span>
+      </div>
+      <div class="ak-snippet-label">HTML Snippet</div>
+      <pre class="ak-snippet">&lt;div class="form-group"&gt;
+  &lt;label for="city"&gt;City&lt;/label&gt;
+  &lt;input type="text" id="city" name="city"&gt;
+&lt;/div&gt;</pre>
+      <p class="ak-q-text">You have located <code>input[@id='city']</code>. Which XPath navigates to its <strong>parent</strong> div?</p>
+      <div class="ak-answer-block">
+        <div class="ak-answer-label">✔ Correct Answer</div>
+        <div class="ak-mcq-answer">
+          <span class="ak-mcq-letter">B</span>
+          <code class="ak-mcq-text">//input[@id='city']/parent::div</code>
+        </div>
+      </div>
+    </div>
+
+    <!-- Q13 -->
+    <div class="ak-card">
+      <div class="ak-card-header">
+        <span class="ak-qnum">Q13</span>
+        <span class="ak-topic">child:: axis</span>
+        <span class="ak-type-badge ak-type-write">Write XPath</span>
+      </div>
+      <div class="ak-snippet-label">HTML Snippet</div>
+      <pre class="ak-snippet">&lt;nav id="topNav"&gt;
+  &lt;a href="/home"&gt;Home&lt;/a&gt;
+  &lt;a href="/profile"&gt;Profile&lt;/a&gt;
+  &lt;a href="/logout"&gt;Logout&lt;/a&gt;
+&lt;/nav&gt;</pre>
+      <p class="ak-q-text">Write an XPath using <code>child::</code> to select all <code>&lt;a&gt;</code> elements inside <code>nav#topNav</code>.</p>
+      <div class="ak-answer-block">
+        <div class="ak-answer-label">✔ Accepted Answers</div>
+        <ul class="ak-answer-list">
+          <li><span class="ak-ans-num">1.</span><code class="ak-ans-code">//nav[@id='topNav']/child::a</code><span class="ak-primary-badge">Primary</span></li>
+          <li><span class="ak-ans-num">2.</span><code class="ak-ans-code">//nav[@id='topNav']/a</code></li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Q14 -->
+    <div class="ak-card">
+      <div class="ak-card-header">
+        <span class="ak-qnum">Q14</span>
+        <span class="ak-topic">ancestor:: axis</span>
+        <span class="ak-type-badge ak-type-write">Write XPath</span>
+      </div>
+      <div class="ak-snippet-label">HTML Snippet</div>
+      <pre class="ak-snippet">&lt;div id="wrapper"&gt;
+  &lt;section class="content"&gt;
+    &lt;form id="contactForm"&gt;
+      &lt;input type="text" id="fullName"&gt;
+    &lt;/form&gt;
+  &lt;/section&gt;
+&lt;/div&gt;</pre>
+      <p class="ak-q-text">Starting from <code>input[@id='fullName']</code>, use <code>ancestor::</code> to reach <strong>div#wrapper</strong>.</p>
+      <div class="ak-answer-block">
+        <div class="ak-answer-label">✔ Accepted Answers</div>
+        <ul class="ak-answer-list">
+          <li><span class="ak-ans-num">1.</span><code class="ak-ans-code">//input[@id='fullName']/ancestor::div[@id='wrapper']</code><span class="ak-primary-badge">Primary</span></li>
+          <li><span class="ak-ans-num">2.</span><code class="ak-ans-code">//input[@id='fullName']/ancestor::div</code></li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Q15 -->
+    <div class="ak-card">
+      <div class="ak-card-header">
+        <span class="ak-qnum">Q15</span>
+        <span class="ak-topic">descendant:: axis</span>
+        <span class="ak-type-badge ak-type-mcq">Multiple Choice</span>
+      </div>
+      <div class="ak-snippet-label">HTML Snippet</div>
+      <pre class="ak-snippet">&lt;div id="sidebar"&gt;
+  &lt;ul&gt;
+    &lt;li&gt;&lt;a href="/page1"&gt;Page 1&lt;/a&gt;&lt;/li&gt;
+    &lt;li&gt;&lt;a href="/page2"&gt;Page 2&lt;/a&gt;&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/div&gt;</pre>
+      <p class="ak-q-text">Which XPath uses <code>descendant::</code> to select all links inside <code>div#sidebar</code>?</p>
+      <div class="ak-answer-block">
+        <div class="ak-answer-label">✔ Correct Answer</div>
+        <div class="ak-mcq-answer">
+          <span class="ak-mcq-letter">B</span>
+          <code class="ak-mcq-text">//div[@id='sidebar']/descendant::a</code>
+        </div>
+      </div>
+    </div>
+
+    <!-- Q16 -->
+    <div class="ak-card">
+      <div class="ak-card-header">
+        <span class="ak-qnum">Q16</span>
+        <span class="ak-topic">following-sibling:: axis</span>
+        <span class="ak-type-badge ak-type-write">Write XPath</span>
+      </div>
+      <div class="ak-snippet-label">HTML Snippet</div>
+      <pre class="ak-snippet">&lt;div class="field-row"&gt;
+  &lt;label for="dob"&gt;Date of Birth&lt;/label&gt;
+  &lt;input type="date" id="dob" name="dob"&gt;
+&lt;/div&gt;</pre>
+      <p class="ak-q-text">You know the label <code>for='dob'</code>. Use <code>following-sibling::</code> to reach the input next to it.</p>
+      <div class="ak-answer-block">
+        <div class="ak-answer-label">✔ Accepted Answers</div>
+        <ul class="ak-answer-list">
+          <li><span class="ak-ans-num">1.</span><code class="ak-ans-code">//label[@for='dob']/following-sibling::input</code><span class="ak-primary-badge">Primary</span></li>
+          <li><span class="ak-ans-num">2.</span><code class="ak-ans-code">//label[@for='dob']/following-sibling::input[@id='dob']</code></li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Q17 -->
+    <div class="ak-card">
+      <div class="ak-card-header">
+        <span class="ak-qnum">Q17</span>
+        <span class="ak-topic">preceding-sibling:: axis</span>
+        <span class="ak-type-badge ak-type-mcq">Multiple Choice</span>
+      </div>
+      <div class="ak-snippet-label">HTML Snippet</div>
+      <pre class="ak-snippet">&lt;tr&gt;
+  &lt;td&gt;Product Name&lt;/td&gt;
+  &lt;td&gt;Quantity&lt;/td&gt;
+  &lt;td class="price"&gt;$49.99&lt;/td&gt;
+&lt;/tr&gt;</pre>
+      <p class="ak-q-text">You are on <code>td.price</code>. Which XPath selects the <strong>cell immediately before it</strong> (Quantity)?</p>
+      <div class="ak-answer-block">
+        <div class="ak-answer-label">✔ Correct Answer</div>
+        <div class="ak-mcq-answer">
+          <span class="ak-mcq-letter">B</span>
+          <code class="ak-mcq-text">//td[@class='price']/preceding-sibling::td[1]</code>
+        </div>
+      </div>
+    </div>
+
+    <!-- Q18 -->
+    <div class="ak-card">
+      <div class="ak-card-header">
+        <span class="ak-qnum">Q18</span>
+        <span class="ak-topic">following:: axis</span>
+        <span class="ak-type-badge ak-type-write">Write XPath</span>
+      </div>
+      <div class="ak-snippet-label">HTML Snippet</div>
+      <pre class="ak-snippet">&lt;div id="page"&gt;
+  &lt;h2 id="sectionA"&gt;Section A&lt;/h2&gt;
+  &lt;p&gt;Some intro text.&lt;/p&gt;
+  &lt;h2 id="sectionB"&gt;Section B&lt;/h2&gt;
+  &lt;p&gt;More content here.&lt;/p&gt;
+&lt;/div&gt;</pre>
+      <p class="ak-q-text">Write an XPath using <code>following::</code> to select all elements after <code>h2#sectionA</code>.</p>
+      <div class="ak-answer-block">
+        <div class="ak-answer-label">✔ Accepted Answers</div>
+        <ul class="ak-answer-list">
+          <li><span class="ak-ans-num">1.</span><code class="ak-ans-code">//h2[@id='sectionA']/following::*</code><span class="ak-primary-badge">Primary</span></li>
+          <li><span class="ak-ans-num">2.</span><code class="ak-ans-code">//h2[@id='sectionA']/following::node()</code></li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Q19 -->
+    <div class="ak-card">
+      <div class="ak-card-header">
+        <span class="ak-qnum">Q19</span>
+        <span class="ak-topic">preceding:: axis</span>
+        <span class="ak-type-badge ak-type-write">Write XPath</span>
+      </div>
+      <div class="ak-snippet-label">HTML Snippet</div>
+      <pre class="ak-snippet">&lt;form id="checkoutForm"&gt;
+  &lt;input type="text"   id="cardName"   placeholder="Name on Card"&gt;
+  &lt;input type="text"   id="cardNumber" placeholder="Card Number"&gt;
+  &lt;input type="submit" id="payBtn"     value="Pay Now"&gt;
+&lt;/form&gt;</pre>
+      <p class="ak-q-text">Write an XPath using <code>preceding::</code> to select all elements before the submit input <code>id='payBtn'</code>.</p>
+      <div class="ak-answer-block">
+        <div class="ak-answer-label">✔ Accepted Answers</div>
+        <ul class="ak-answer-list">
+          <li><span class="ak-ans-num">1.</span><code class="ak-ans-code">//input[@id='payBtn']/preceding::*</code><span class="ak-primary-badge">Primary</span></li>
+          <li><span class="ak-ans-num">2.</span><code class="ak-ans-code">//input[@value='Pay Now']/preceding::*</code></li>
+          <li><span class="ak-ans-num">3.</span><code class="ak-ans-code">//input[@id='payBtn']/preceding::input</code></li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Q20 -->
+    <div class="ak-card">
+      <div class="ak-card-header">
+        <span class="ak-qnum">Q20</span>
+        <span class="ak-topic">self:: axis</span>
+        <span class="ak-type-badge ak-type-write">Write XPath</span>
+      </div>
+      <div class="ak-snippet-label">HTML Snippet</div>
+      <pre class="ak-snippet">&lt;button id="saveBtn" class="btn-primary" type="button"&gt;Save&lt;/button&gt;</pre>
+      <p class="ak-q-text">Write an XPath using <code>self::</code> starting from <code>//button[@id='saveBtn']</code>.</p>
+      <div class="ak-answer-block">
+        <div class="ak-answer-label">✔ Accepted Answers</div>
+        <ul class="ak-answer-list">
+          <li><span class="ak-ans-num">1.</span><code class="ak-ans-code">//button[@id='saveBtn']/self::button</code><span class="ak-primary-badge">Primary</span></li>
+          <li><span class="ak-ans-num">2.</span><code class="ak-ans-code">//button[@id='saveBtn']/self::*</code></li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- ════════════════════════════════════════════════════════════════
+         SECTION 4 — REAL-WORLD ELEMENTS  Q21–Q25
+    ════════════════════════════════════════════════════════════════ -->
+    <div class="section-title">
+      <span class="sec-num">Section 4</span>
+      Real-World Elements &amp; Scenarios
+      <span style="margin-left:auto;font-weight:400;font-size:11px;opacity:.8">Q21 – Q25</span>
+    </div>
+
+    <!-- Q21 -->
+    <div class="ak-card">
+      <div class="ak-card-header">
+        <span class="ak-qnum">Q21</span>
+        <span class="ak-topic">Checkboxes</span>
+        <span class="ak-type-badge ak-type-mcq">Multiple Choice</span>
+      </div>
+      <div class="ak-snippet-label">HTML Snippet</div>
+      <pre class="ak-snippet">&lt;div class="preferences"&gt;
+  &lt;input type="checkbox" id="chk_news"   name="subscribe" value="news"&gt;
+  &lt;label for="chk_news"&gt;Newsletter&lt;/label&gt;
+  &lt;input type="checkbox" id="chk_offers" name="subscribe" value="offers"&gt;
+  &lt;label for="chk_offers"&gt;Special Offers&lt;/label&gt;
+&lt;/div&gt;</pre>
+      <p class="ak-q-text">Which XPath selects <strong>all checkbox inputs</strong> inside the preferences div?</p>
+      <div class="ak-answer-block">
+        <div class="ak-answer-label">✔ Correct Answer</div>
+        <div class="ak-mcq-answer">
+          <span class="ak-mcq-letter">B</span>
+          <code class="ak-mcq-text">//div[@class='preferences']//input[@type='checkbox']</code>
+        </div>
+      </div>
+    </div>
+
+    <!-- Q22 -->
+    <div class="ak-card">
+      <div class="ak-card-header">
+        <span class="ak-qnum">Q22</span>
+        <span class="ak-topic">Tables — Row selection</span>
+        <span class="ak-type-badge ak-type-write">Write XPath</span>
+      </div>
+      <div class="ak-snippet-label">HTML Snippet</div>
+      <pre class="ak-snippet">&lt;table id="userTable"&gt;
+  &lt;thead&gt;&lt;tr&gt;&lt;th&gt;Name&lt;/th&gt;&lt;th&gt;Role&lt;/th&gt;&lt;th&gt;Status&lt;/th&gt;&lt;/tr&gt;&lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;&lt;td&gt;Alice&lt;/td&gt;&lt;td&gt;Admin&lt;/td&gt;  &lt;td&gt;Active&lt;/td&gt;&lt;/tr&gt;
+    &lt;tr&gt;&lt;td&gt;Bob&lt;/td&gt;  &lt;td&gt;User&lt;/td&gt;   &lt;td&gt;Inactive&lt;/td&gt;&lt;/tr&gt;
+    &lt;tr&gt;&lt;td&gt;Carol&lt;/td&gt;&lt;td&gt;User&lt;/td&gt;   &lt;td&gt;Active&lt;/td&gt;&lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;</pre>
+      <p class="ak-q-text">Write an XPath to select the <strong>entire row</strong> that contains the name <em>Bob</em>.</p>
+      <div class="ak-answer-block">
+        <div class="ak-answer-label">✔ Accepted Answers</div>
+        <ul class="ak-answer-list">
+          <li><span class="ak-ans-num">1.</span><code class="ak-ans-code">//tr[td[text()='Bob']]</code><span class="ak-primary-badge">Primary</span></li>
+          <li><span class="ak-ans-num">2.</span><code class="ak-ans-code">//table[@id='userTable']//tr[td[text()='Bob']]</code></li>
+          <li><span class="ak-ans-num">3.</span><code class="ak-ans-code">//tbody/tr[td[text()='Bob']]</code></li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Q23 -->
+    <div class="ak-card">
+      <div class="ak-card-header">
+        <span class="ak-qnum">Q23</span>
+        <span class="ak-topic">Links — contains() on text</span>
+        <span class="ak-type-badge ak-type-mcq">Multiple Choice</span>
+      </div>
+      <div class="ak-snippet-label">HTML Snippet</div>
+      <pre class="ak-snippet">&lt;footer&gt;
+  &lt;a href="/privacy-policy"&gt;Privacy Policy&lt;/a&gt;
+  &lt;a href="/terms-of-service"&gt;Terms of Service&lt;/a&gt;
+  &lt;a href="/contact-us"&gt;Contact Us&lt;/a&gt;
+&lt;/footer&gt;</pre>
+      <p class="ak-q-text">Which XPath selects the link whose text <strong>contains</strong> the word <em>Privacy</em>?</p>
+      <div class="ak-answer-block">
+        <div class="ak-answer-label">✔ Correct Answer</div>
+        <div class="ak-mcq-answer">
+          <span class="ak-mcq-letter">C</span>
+          <code class="ak-mcq-text">//a[contains(text(),'Privacy')]</code>
+        </div>
+      </div>
+    </div>
+
+    <!-- Q24 -->
+    <div class="ak-card">
+      <div class="ak-card-header">
+        <span class="ak-qnum">Q24</span>
+        <span class="ak-topic">Labels and Inputs</span>
+        <span class="ak-type-badge ak-type-write">Write XPath</span>
+      </div>
+      <div class="ak-snippet-label">HTML Snippet</div>
+      <pre class="ak-snippet">&lt;div class="form-group"&gt;
+  &lt;label for="phoneNumber"&gt;Phone&lt;/label&gt;
+  &lt;input type="tel" id="phoneNumber" name="phone" placeholder="+1 000 000 0000"&gt;
+&lt;/div&gt;</pre>
+      <p class="ak-q-text">Find the input by locating its label text <em>Phone</em> and navigating to the input via <code>following-sibling::</code>.</p>
+      <div class="ak-answer-block">
+        <div class="ak-answer-label">✔ Accepted Answers</div>
+        <ul class="ak-answer-list">
+          <li><span class="ak-ans-num">1.</span><code class="ak-ans-code">//label[text()='Phone']/following-sibling::input</code><span class="ak-primary-badge">Primary</span></li>
+          <li><span class="ak-ans-num">2.</span><code class="ak-ans-code">//label[contains(text(),'Phone')]/following-sibling::input</code></li>
+          <li><span class="ak-ans-num">3.</span><code class="ak-ans-code">//input[@id='phoneNumber']</code></li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Q25 -->
+    <div class="ak-card">
+      <div class="ak-card-header">
+        <span class="ak-qnum">Q25</span>
+        <span class="ak-topic">Dynamic IDs — Nested spans</span>
+        <span class="ak-type-badge ak-type-mcq">Multiple Choice</span>
+      </div>
+      <div class="ak-snippet-label">HTML Snippet</div>
+      <pre class="ak-snippet">&lt;div class="product-card"&gt;
+  &lt;span class="product-title"&gt;
+    &lt;span class="badge new-badge"&gt;NEW&lt;/span&gt;
+    Wireless Headphones
+  &lt;/span&gt;
+  &lt;span class="product-price"&gt;$89.99&lt;/span&gt;
+  &lt;button id="addToCart_8472" class="add-btn"&gt;Add to Cart&lt;/button&gt;
+&lt;/div&gt;</pre>
+      <p class="ak-q-text">The button ID is dynamic. Which XPath <strong>reliably</strong> targets it regardless of the number?</p>
+      <div class="ak-answer-block">
+        <div class="ak-answer-label">✔ Correct Answer</div>
+        <div class="ak-mcq-answer">
+          <span class="ak-mcq-letter">B</span>
+          <code class="ak-mcq-text">//button[contains(@id,'addToCart_')]</code>
+        </div>
+      </div>
+    </div>
+
+    <!-- ════════════════════════════════════════════════════════════════
+         QUICK REFERENCE SUMMARY
+    ════════════════════════════════════════════════════════════════ -->
+    <div class="summary-section">
+      <h2 class="summary-title">📋 Quick Reference — All 25 Answers</h2>
+      <table class="summary-table">
+        <thead>
+          <tr><th>#</th><th>Topic</th><th>Type</th><th>Primary Correct Answer</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>1</td> <td>Relative XPath — Input</td>          <td><span class="type-badge tb-write">Write</span></td> <td><code>//input[@id='username']</code></td></tr>
+          <tr><td>2</td> <td>Absolute XPath</td>                  <td><span class="type-badge tb-mcq">MCQ — A</span></td> <td><code>/html/body/div/form/input</code></td></tr>
+          <tr><td>3</td> <td>Select by Attribute</td>             <td><span class="type-badge tb-write">Write</span></td> <td><code>//button[@type='submit']</code></td></tr>
+          <tr><td>4</td> <td>Select by text()</td>                <td><span class="type-badge tb-mcq">MCQ — B</span></td> <td><code>//button[text()='Login']</code></td></tr>
+          <tr><td>5</td> <td>contains() — Class</td>              <td><span class="type-badge tb-write">Write</span></td> <td><code>//div[contains(@class,'nav-menu')]</code></td></tr>
+          <tr><td>6</td> <td>starts-with() — Dynamic IDs</td>     <td><span class="type-badge tb-mcq">MCQ — C</span></td> <td><code>//td[starts-with(@id,'row_')]</code></td></tr>
+          <tr><td>7</td> <td>AND condition</td>                   <td><span class="type-badge tb-write">Write</span></td> <td><code>//input[@type='text' and @name='firstName']</code></td></tr>
+          <tr><td>8</td> <td>OR condition</td>                    <td><span class="type-badge tb-write">Write</span></td> <td><code>//input[@type='text' or @type='email']</code></td></tr>
+          <tr><td>9</td> <td>Indexing</td>                        <td><span class="type-badge tb-write">Write</span></td> <td><code>//ul[@id='menuList']/li[3]</code></td></tr>
+          <tr><td>10</td><td>last() function</td>                 <td><span class="type-badge tb-mcq">MCQ — C</span></td> <td><code>//ul/li[last()]</code></td></tr>
+          <tr><td>11</td><td>position() function</td>             <td><span class="type-badge tb-write">Write</span></td> <td><code>//table[@id='dataTable']/tr[position()=2]</code></td></tr>
+          <tr><td>12</td><td>parent:: axis</td>                   <td><span class="type-badge tb-mcq">MCQ — B</span></td> <td><code>//input[@id='city']/parent::div</code></td></tr>
+          <tr><td>13</td><td>child:: axis</td>                    <td><span class="type-badge tb-write">Write</span></td> <td><code>//nav[@id='topNav']/child::a</code></td></tr>
+          <tr><td>14</td><td>ancestor:: axis</td>                 <td><span class="type-badge tb-write">Write</span></td> <td><code>//input[@id='fullName']/ancestor::div[@id='wrapper']</code></td></tr>
+          <tr><td>15</td><td>descendant:: axis</td>               <td><span class="type-badge tb-mcq">MCQ — B</span></td> <td><code>//div[@id='sidebar']/descendant::a</code></td></tr>
+          <tr><td>16</td><td>following-sibling:: axis</td>        <td><span class="type-badge tb-write">Write</span></td> <td><code>//label[@for='dob']/following-sibling::input</code></td></tr>
+          <tr><td>17</td><td>preceding-sibling:: axis</td>        <td><span class="type-badge tb-mcq">MCQ — B</span></td> <td><code>//td[@class='price']/preceding-sibling::td[1]</code></td></tr>
+          <tr><td>18</td><td>following:: axis</td>                <td><span class="type-badge tb-write">Write</span></td> <td><code>//h2[@id='sectionA']/following::*</code></td></tr>
+          <tr><td>19</td><td>preceding:: axis</td>                <td><span class="type-badge tb-write">Write</span></td> <td><code>//input[@id='payBtn']/preceding::*</code></td></tr>
+          <tr><td>20</td><td>self:: axis</td>                     <td><span class="type-badge tb-write">Write</span></td> <td><code>//button[@id='saveBtn']/self::button</code></td></tr>
+          <tr><td>21</td><td>Checkboxes</td>                      <td><span class="type-badge tb-mcq">MCQ — B</span></td> <td><code>//div[@class='preferences']//input[@type='checkbox']</code></td></tr>
+          <tr><td>22</td><td>Tables — Row selection</td>          <td><span class="type-badge tb-write">Write</span></td> <td><code>//tr[td[text()='Bob']]</code></td></tr>
+          <tr><td>23</td><td>Links — contains() on text</td>      <td><span class="type-badge tb-mcq">MCQ — C</span></td> <td><code>//a[contains(text(),'Privacy')]</code></td></tr>
+          <tr><td>24</td><td>Labels and Inputs</td>               <td><span class="type-badge tb-write">Write</span></td> <td><code>//label[text()='Phone']/following-sibling::input</code></td></tr>
+          <tr><td>25</td><td>Dynamic IDs — Nested spans</td>      <td><span class="type-badge tb-mcq">MCQ — B</span></td> <td><code>//button[contains(@id,'addToCart_')]</code></td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="ak-footer">
+      XPath Practice Paper 1 — Answer Key &nbsp;|&nbsp; QA Automation Training &nbsp;|&nbsp; For Trainer Use Only
+    </div>
+
+  </main>
+
+  </div><!-- end #mainContent -->
+
+  <script>
+    /* ── Password check ──────────────────────────────────────────────── */
+    const CORRECT_HASH = "5d43820495cfb413a3e21675f6ebd2de0914dec40456f55bd722e5a9d1ebe4f8";
+
+    // Simple SHA-256 via SubtleCrypto (works in all modern browsers locally)
+    async function sha256(message) {
+      const msgBuffer = new TextEncoder().encode(message);
+      const hashBuffer = await crypto.subtle.digest("SHA-256", msgBuffer);
+      const hashArray  = Array.from(new Uint8Array(hashBuffer));
+      return hashArray.map(b => b.toString(16).padStart(2, "0")).join("");
+    }
+
+    async function checkPwd() {
+      const input = document.getElementById("pwInput").value;
+      const errEl = document.getElementById("pwError");
+      if (!input) {
+        errEl.textContent = "Please enter a password.";
+        return;
+      }
+      const hash = await sha256(input);
+      if (hash === CORRECT_HASH) {
+        document.getElementById("lockScreen").style.display  = "none";
+        document.getElementById("mainContent").style.display = "block";
+        errEl.textContent = "";
+        // Save unlock in sessionStorage so refresh doesn't re-lock
+        sessionStorage.setItem("ak_unlocked", "1");
+      } else {
+        errEl.textContent = "Incorrect password. Please try again.";
+        document.getElementById("pwInput").value = "";
+        document.getElementById("pwInput").focus();
+      }
+    }
+
+    // Auto-unlock if already verified this session
+    if (sessionStorage.getItem("ak_unlocked") === "1") {
+      document.getElementById("lockScreen").style.display  = "none";
+      document.getElementById("mainContent").style.display = "block";
+    }
+  </script>
+</body>
+</html>

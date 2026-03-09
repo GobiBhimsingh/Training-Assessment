@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>XPath Practice Assessment — Paper 1</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- ═══════════════════════════════════════════════════════════════════
+       HEADER
+  ═══════════════════════════════════════════════════════════════════ -->
+  <header class="site-header">
+    <div class="page-wrap">
+      <span class="header-badge">QA Automation Training</span>
+      <span class="header-badge" style="background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.25);border-radius:20px;font-size:11px;letter-spacing:.08em;text-transform:uppercase;padding:2px 10px;width:fit-content;margin-bottom:4px;display:inline-block;">Paper 1 — Core Concepts</span>
+      <h1>XPath Practice Assessment</h1>
+      <p class="header-sub">25 questions &nbsp;|&nbsp; Write XPath &amp; Multiple Choice &nbsp;|&nbsp; Instant Feedback</p>
+    </div>
+  </header>
+
+  <main class="page-wrap">
+
+    <!-- ─── Instructions ─────────────────────────────────────────────── -->
+    <div class="instructions">
+      <h2>📋 Instructions</h2>
+      <ul>
+        <li>Read each question carefully and review the HTML snippet provided.</li>
+        <li>For <strong>Write XPath</strong> questions, type your answer in the text box and click <strong>Check Answer</strong>.</li>
+        <li>For <strong>Multiple Choice</strong> questions, select the best option and click <strong>Check Answer</strong>.</li>
+        <li>Use the numbered navigator buttons below to jump to any question.</li>
+        <li>Click <strong>Submit All</strong> on the last question to see your final score.</li>
+        <li>Answers are case-sensitive and must be valid XPath expressions.</li>
+      </ul>
+    </div>
+
+    <!-- ─── Progress bar ─────────────────────────────────────────────── -->
+    <div class="progress-wrap" id="progressWrap">
+      <div class="progress-header">
+        <span class="progress-title">Progress</span>
+        <span id="progressLabel">0 / 25 answered</span>
+      </div>
+      <div class="progress-track">
+        <div id="progressBar"></div>
+      </div>
+    </div>
+
+    <!-- ─── Step navigator ───────────────────────────────────────────── -->
+    <div id="stepNav"></div>
+
+    <!-- ─── Questions (built by JS) ──────────────────────────────────── -->
+    <div id="questionsContainer"></div>
+
+    <!-- ═══════════════════════════════════════════════════════════════
+         RESULT SECTION  (hidden until Submit)
+    ═══════════════════════════════════════════════════════════════ -->
+    <section id="resultSection" class="hidden">
+      <div class="result-card">
+        <h2 class="result-title">📊 Assessment Complete</h2>
+
+        <div class="score-grid">
+          <div class="score-item">
+            <span class="score-val" id="res-total">—</span>
+            <div class="score-lbl">Total Questions</div>
+          </div>
+          <div class="score-item">
+            <span class="score-val" id="res-correct" style="color:var(--clr-correct)">—</span>
+            <div class="score-lbl">Correct</div>
+          </div>
+          <div class="score-item">
+            <span class="score-val" id="res-wrong" style="color:var(--clr-wrong)">—</span>
+            <div class="score-lbl">Incorrect</div>
+          </div>
+          <div class="score-item score-pct">
+            <span class="score-val" id="res-pct">—</span>
+            <div class="score-lbl">Score</div>
+          </div>
+        </div>
+
+        <div id="performanceMsg" class="perf-msg"></div>
+
+        <br>
+        <button class="btn-reset" onclick="resetAll()">🔄 Restart Assessment</button>
+      </div>
+    </section>
+
+
+  </main>
+
+  <!-- Script loaded at end of body so DOM is ready -->
+  <script src="script.js"></script>
+</body>
+</html>
